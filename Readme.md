@@ -1,0 +1,1 @@
+Folder with labs assigned on first semester in Mephi. 
