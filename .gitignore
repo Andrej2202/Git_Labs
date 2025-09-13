@@ -1,0 +1,50 @@
+# Компилируемые файлы (основные)
+*.exe
+*.o
+*.obj
+*.out
+*.a
+*.lib
+
+# Папки сборки (от компиляторов и IDE)
+Debug/
+Release/
+build/
+bin/
+dist/
+out/
+
+# Файлы GCC / MinGW
+*.dSYM/
+*.map
+
+# Файлы Visual Studio (Windows)
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.suo
+*.ipch
+*.aps
+*.ncb
+*.opensdf
+
+# Файлы Code::Blocks / Dev-C++
+*.cbp
+*.layout
+*.dev
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Операционная система (Windows)
+Thumbs.db
+Desktop.ini
+~$*
+
+# VS Code
+.vscode/
