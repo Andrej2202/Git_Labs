@@ -22,24 +22,26 @@ double sqrt_x(double x){
     return cur;
 }
 
+void init(double *a, double *b, double *c){
+    char ans;
+    do{
+        clear_screen();
+        fflush(stdout);
+        printf("Введите коэффициенты a, b, c:\n");
+        scanf("%lf %lf %lf", a, b, c);
+        printf("\nВведенное уравнение: %.3g * X^2 + %.3g * X + %.3g = 0\n\n", *a, *b, *c);
+        printf("Подтвердите корректность вписанного уравнения (y/n): ");
+        scanf(" %c", &ans);
+    }while(ans != 'y');
+}
+
 /* 
-2) придумать еще прикольных фичей
-4) Потестить на баги
+
 */
 int main(){
     setlocale(LC_ALL, ".UTF8");
     double a, b, c;
-    char ans;
-    do{
-        clear_screen();
-        printf("\033[2J\033[H");
-        fflush(stdout);
-        printf("Введите коэффициенты a, b, c:\n");
-        scanf("%lf %lf %lf", &a, &b, &c);
-        printf("\nВведенное уравнение: %.3g * X^2 + %.3g * X + %.3g = 0\n\n", a, b, c);
-        printf("Подтвердите корректность вписанного уравнения (y/n): ");
-        scanf(" %c", &ans);
-    }while(ans != 'y');
+    init(&a, &b, &c);
     printf("\n");
 
     /*
