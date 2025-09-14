@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <windows.h>
 
 
 void clear_screen() {
@@ -40,6 +41,7 @@ void init(double *a, double *b, double *c){
 */
 int main(){
     setlocale(LC_ALL, ".UTF8");
+    SetConsoleOutputCP(CP_UTF8);
     double a, b, c;
     init(&a, &b, &c);
     printf("\n");
@@ -99,14 +101,24 @@ int main(){
         printf("\nКоординаты вершины:\n");
         double xPoint = -1 * b / 2 * a, yPoint = a * (xPoint * xPoint) + b * xPoint + c;
         printf("X вершины = %.3g, Y вершины = %.3g\n", xPoint, yPoint);
-
+        
         printf("\nПроизводная:\n");
         double der1 = 2 * a, der2 = b;
         if(der2 < 0){
-            printf("Y = %.3g * x - %.3g\n\n", der1, -1 * der2);
+            printf("Y = %.3g * x - %.3g\n", der1, -1 * der2);
         }
         else{
-            printf("Y = %.3g * x + %.3g\n\n", der1, der2);
+            printf("Y = %.3g * x + %.3g\n", der1, der2);
+        }
+        double zero_der;
+        zero_der = -1 * der2 / der1;
+        if(a < 0){
+            printf("При x ε (-∞; %.3g) f`(x) > 0 => функция возрастает\n", zero_der);
+            printf("При x ε (%.3g; ∞) f`(x) < 0 => функция убывает\n\n", zero_der);
+        }
+        else{
+            printf("При x ε (-∞; %.3g) f`(x) < 0 => функция убывает\n", zero_der);
+            printf("При x ε (%.3g; ∞) f`(x) > 0 => функция возрастает\n\n", zero_der);
         }
         
     }
