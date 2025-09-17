@@ -102,11 +102,11 @@ void output(double a, double  b, double c){
         zero_der = -1 * der2 / der1;
         if(a < 0){
             printf("При x ε (-∞; %.3g) f`(x) > 0 => функция возрастает\n", zero_der);
-            printf("При x ε (%.3g; ∞) f`(x) < 0 => функция убывает\n\n", zero_der);
+            printf("При x ε (%.3g; ∞)  f`(x) < 0 => функция убывает\n\n", zero_der);
         }
         else{
             printf("При x ε (-∞; %.3g) f`(x) < 0 => функция убывает\n", zero_der);
-            printf("При x ε (%.3g; ∞) f`(x) > 0 => функция возрастает\n\n", zero_der);
+            printf("При x ε (%.3g; ∞)  f`(x) > 0 => функция возрастает\n\n", zero_der);
         }
         
     }
@@ -122,7 +122,7 @@ int main(){
     init(&a, &b, &c);
 
     printf("\n");
-
+    
     /*
     int accuracy;
     printf("Введите точность округления(кол-во знаков после запятой в ответе):\n");
