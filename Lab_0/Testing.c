@@ -23,6 +23,7 @@ double sqrt_x(double x){
     return cur;
 }
 
+
 void init(double *a, double *b, double *c){
     char ans;
     do{
@@ -36,21 +37,8 @@ void init(double *a, double *b, double *c){
     }while(ans != 'y');
 }
 
-/* 
 
-*/
-int main(){
-    setlocale(LC_ALL, ".UTF8");
-    SetConsoleOutputCP(CP_UTF8);
-    double a, b, c;
-    init(&a, &b, &c);
-    printf("\n");
-
-    /*
-    int accuracy;
-    printf("Введите точность округления(кол-во знаков после запятой в ответе):\n");
-    scanf("%d", accuracy);
-    */
+void output(double a, double  b, double c){
     double dis = b * b - 4 * a * c;
     if(a == 0.0){
         if(b == 0.0 & c == 0.0){
@@ -74,7 +62,7 @@ int main(){
         if(dis < 0){
             printf("Дискриминант меньше 0\n\n");
             dis *= -1;
-            double res_re, res_im;
+            double res_re = 0.0, res_im = 0.0;
             res_re = -1 * b / (2 * a);
             res_im = sqrt_x(dis) / (2 * a); 
             printf("X1 = %.3g + i*%.3g\n", res_re, res_im);
@@ -83,14 +71,14 @@ int main(){
         }
         else if(dis == 0){
             printf("Дискриминант равен 0\n\n");
-            double res;
+            double res = 0.0;
             res = -1 * b / (2 * a);
             printf("X1 = X2 = %.3g\n", res);
 
         }
         else{
             printf("Дискриминант больше 0\n\n");
-            double x1, x2, sqrt_dis;
+            double x1 = 0.0, x2 = 0.0, sqrt_dis = 0.0;
             sqrt_dis = sqrt_x(dis);
             x1 = (-1 * b + sqrt_dis) / (2 * a);
             x2 = (-1 * b - sqrt_dis) / (2 * a);
@@ -110,7 +98,7 @@ int main(){
         else{
             printf("Y = %.3g * x + %.3g\n", der1, der2);
         }
-        double zero_der;
+        double zero_der = 0.0;
         zero_der = -1 * der2 / der1;
         if(a < 0){
             printf("При x ε (-∞; %.3g) f`(x) > 0 => функция возрастает\n", zero_der);
@@ -122,6 +110,27 @@ int main(){
         }
         
     }
+}
+
+
+int main(){
+    setlocale(LC_ALL, ".UTF8");
+    SetConsoleOutputCP(CP_UTF8);
+
+    double a = 0.0, b = 0.0, c = 0.0;
+
+    init(&a, &b, &c);
+
+    printf("\n");
+
+    /*
+    int accuracy;
+    printf("Введите точность округления(кол-во знаков после запятой в ответе):\n");
+    scanf("%d", accuracy);
+    */
+    
+    output(a, b, c);
+
     system("pause");
     return 0;
 }
