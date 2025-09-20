@@ -1,6 +1,6 @@
 typedef struct {
     char name[64];
-    int hero, hp, capacity, strength, level;
+    int hero, hp, capacity, strength, level, xp;
     
 } Param;
 
