@@ -6,6 +6,7 @@
 #include "sys_funcs.h"
 #include "Player_parametrs.h"
 #include "text_blocks.h"
+#include "fight.h"
 #include "dungeon_logic.h"
 #include "init.h"
 

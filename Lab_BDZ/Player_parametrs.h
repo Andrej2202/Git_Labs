@@ -9,9 +9,6 @@ Param player;
 
 
 void change_player_param(char *change, int n){
-    if(strcmp(change, "class") == 0){
-        player.hero += n;
-    }
     if(strcmp(change, "hp") == 0){
         player.hp += n;
     }
@@ -23,6 +20,9 @@ void change_player_param(char *change, int n){
     }
     if(strcmp(change, "level") == 0){
         player.level += n;
+    }
+    if(strcmp(change, "xp") == 0){
+        player.xp += n;
     }
 }
 
@@ -43,6 +43,7 @@ int get_mathInfo(char* ask){
     if(strcmp(ask, "level") == 0){
         return player.level;
     }
+    return -1;
 }
 
 
@@ -52,11 +53,12 @@ char* get_printInfo(char* ask){
     }
     if(strcmp(ask, "class_name") == 0){
         switch(player.hero) {
-            case 0: return "Воин";
-            case 1: return "Охотник";
-            case 2: return "Алхимик";
+            case 0: return "воин";
+            case 1: return "охотник";
+            case 2: return "алхимик";
         }      
     }
+    return "None";
     
 }
 

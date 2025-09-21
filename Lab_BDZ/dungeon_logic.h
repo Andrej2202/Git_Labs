@@ -3,7 +3,7 @@ int current_dungeon = 1;
 
 void dungeon_generation(){//Fisher-Yates shuffle
     srand(time(NULL));
-    int values[3] = {0, 1, 2};
+    int values[3] = {0, 1, 2}; // 0 - empty; 1 - treasuries; 2 - mob
 
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 3; j++) {
@@ -23,13 +23,28 @@ void dungeon_generation(){//Fisher-Yates shuffle
 void dungeon_exploring(){
     dungeon_generation();
     
-    entering_dungeon_text();
-
-    printf("Для начала пути нажмите enter");
-    getchar();
-    /*
+    entering_dungeons_text();
     for (int i = 0; i < 7; i++){
-        
+        each_dungeon_text(i);
+
+        int way = 0;
+        scanf("%d", &way);
+        current_dungeon = i + 1;
+        clear_screen();
+        switch(dungeon[i][way - 1]){
+            case 0:
+                empty_dungeon_text();
+                break;
+            case 1:
+                treasuries_dungeon_text();
+                break;
+            case 2:
+                mob_dungeon_text();
+                fight(current_dungeon);
+        }
+        printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
+        getchar();
+        clear_screen();
+
     }
-    */
 }

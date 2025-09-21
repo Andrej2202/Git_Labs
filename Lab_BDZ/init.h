@@ -29,6 +29,7 @@ void class_pick(){
 
 
 void start() {
+    clear_screen();
     char s = ' ';
     do{
         printf("Здравствуй, исследователь подземелий!\n");
@@ -36,7 +37,7 @@ void start() {
         getchar();
         clear_screen();
         printf("Введи имя игрока:\n");
-        scanf("%s", &player.name);
+        scanf("%s", player.name);
         printf("%s, верно?(y/n)\n", player.name);
         scanf(" %c", &s);
         clear_screen();
