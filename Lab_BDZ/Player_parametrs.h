@@ -18,10 +18,12 @@ void change_player_param(char *change, int n){
     if(strcmp(change, "strength") == 0){
         player.strength += n;
     }
-    if(strcmp(change, "level") == 0){
-        player.level += n;
-    }
     if(strcmp(change, "xp") == 0){
+        while(player.xp + n >= player.level * 10){
+            n -= (player.level * 10 - player.xp);
+            player.level++;
+            player.xp = 0; 
+        }
         player.xp += n;
     }
 }
@@ -42,6 +44,9 @@ int get_mathInfo(char* ask){
     }
     if(strcmp(ask, "level") == 0){
         return player.level;
+    }
+    if(strcmp(ask, "xp") == 0){
+        return player.xp;
     }
     return -1;
 }

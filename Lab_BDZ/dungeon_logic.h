@@ -44,7 +44,9 @@ void dungeon_exploring(){
         }
         printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
         getchar();
-        clear_screen();
-
+        if(i != 6){
+            clear_screen();
+        }
     }
+    game_end_text(1);
 }

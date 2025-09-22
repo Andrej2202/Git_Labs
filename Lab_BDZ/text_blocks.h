@@ -86,6 +86,12 @@ void mob_dungeon_text(){
 }
 
 
-void game_end_text(){
-    printf("капекс");
+void game_end_text(int end){
+    if(end == 0){
+        printf("“ы пал смертью храбрых...");
+    }
+    else{
+        printf("“ы вышел на свет и вдохнул полной грудью свежий воздух");
+    }
+    exit(EXIT_SUCCESS); 
 }

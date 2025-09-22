@@ -4,19 +4,19 @@ void class_pick(){
     player.hero -= 1;
     switch(player.hero) {
         case 0:
-            player.hp = 45; 
+            player.hp = 45000; 
             player.strength = 25; 
             player.capacity = 80;
             break;
 
         case 1:
-            player.hp = 15; 
+            player.hp = 150000; 
             player.strength = 50; 
             player.capacity = 60;
             break;
 
         case 2:
-            player.hp = 40; 
+            player.hp = 400000; 
             player.strength = 20; 
             player.capacity = 30;
             break;
@@ -33,7 +33,7 @@ void start() {
     char s = ' ';
     do{
         printf("Здравствуй, исследователь подземелий!\n");
-        printf("Для продолжения истории на протяжении всей истории используй enter\n");
+        printf("Для продолжения повествования на протяжении всей истории используй enter\n");
         getchar();
         clear_screen();
         printf("Введи имя игрока:\n");
