@@ -1,11 +1,11 @@
 void fight(int lvl){ 
     srand(time(NULL));
-    int cube = rand() % 6  + 1;
-    int mob_health = lvl * 5;
+    int cube;
+    int mob_maxHealth = lvl * 5, mob_health = lvl * 5;
     clear_input();
     while(get_mathInfo("hp") > 0 ){
         clear_screen();
-        printf("Твое хп: %d, хп моба %d", get_mathInfo("hp"), mob_health);
+        printf("Твое хп: %d/%d, хп моба %d/%d", get_mathInfo("hp"), get_mathInfo("max_hp"), mob_health, mob_maxHealth);
         cube = rand() % 6  + 1;
         mob_health -= cube;
         printf("\nТы ударил скелета и он потерял %dхп\n", cube);
@@ -17,6 +17,7 @@ void fight(int lvl){
             printf("Герой получил %d xp за победу\n", lvl * 5);
             if(temp != get_mathInfo("level")){
                 printf("Уровень персонажа повышен до %d\n", get_mathInfo("level"));
+                printf("Улучшенные характеристики персонажа: максимальное хп - %d, базовая сила %d", get_mathInfo("max_hp"), get_mathInfo("strength"));
             }
             getchar();
             break;

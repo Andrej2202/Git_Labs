@@ -1,5 +1,4 @@
 int dungeon[7][3];
-int current_dungeon = 1;
 
 void dungeon_generation(){//Fisher-Yates shuffle
     srand(time(NULL));
@@ -24,27 +23,44 @@ void dungeon_exploring(){
     dungeon_generation();
     
     entering_dungeons_text();
-    for (int i = 0; i < 7; i++){
-        each_dungeon_text(i);
+
+    int current_dungeon = 1;
+    while(current_dungeon < 7){
+        each_dungeon_text(current_dungeon);
 
         int way = 0;
         scanf("%d", &way);
-        current_dungeon = i + 1;
         clear_screen();
-        switch(dungeon[i][way - 1]){
-            case 0:
-                empty_dungeon_text();
-                break;
-            case 1:
-                treasuries_dungeon_text();
-                break;
-            case 2:
-                mob_dungeon_text();
-                fight(current_dungeon);
+
+        if(way == 4){
+            open_inventory();
+            add_to_inv("Хилка", 10);
         }
-        printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
-        getchar();
-        if(i != 6){
+        else{
+            switch(dungeon[current_dungeon][way - 1]){
+                case 0:
+                    empty_dungeon_text();
+                    break;
+                case 1:
+                    treasuries_dungeon_text();
+                    printf("Положить предмет в сумку?(y/n):");
+                    char ans;
+                    scanf(" %c", &ans);
+                    if(ans == 'Y' || ans == 'y'){
+                        add_to_inv("Хилка", 10);
+                    }
+                    getchar();
+                    break;
+                case 2:
+                    mob_dungeon_text();
+                    fight(current_dungeon);
+            }
+            printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
+            getchar();
+            current_dungeon++;
+        }
+
+        if(current_dungeon != 7){
             clear_screen();
         }
     }

@@ -21,8 +21,10 @@ void class_pick(){
             player.capacity = 30;
             break;
     }  
+    player.max_hp = player.hp;
     player.level = 1;
     player.xp = 0;
+    player.addit_strength = 0;
     clear_screen();
     dungeon_exploring();
 }

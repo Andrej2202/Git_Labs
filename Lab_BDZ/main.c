@@ -7,6 +7,7 @@
 #include "Player_parametrs.h"
 #include "text_blocks.h"
 #include "fight.h"
+#include "items.h"
 #include "dungeon_logic.h"
 #include "init.h"
 
