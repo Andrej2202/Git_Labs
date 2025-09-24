@@ -1,13 +1,7 @@
-void clear_input(){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
+#ifndef SYS_FUNCS_H
+#define SYS_FUNCS_H
 
+void clear_input();
+void clear_screen();
 
-void clear_screen() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
 #endif
-}
