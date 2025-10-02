@@ -2,30 +2,32 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "dungeon_logic.h"
-#include "text_blocks.h"
-#include "sys_funcs.h"
-#include "items.h"
 #include "fight.h" 
+#include "items.h"
+#include "sys_funcs.h"
+#include "treasuries.h"
+#include "text_blocks.h"
+#include "dungeon_logic.h"
 
 
-int dungeon[7][3];
+int dungeon[7][2];
 
 void dungeon_generation(){//Fisher-Yates shuffle
     srand(time(NULL));
-    int values[3] = {0, 1, 2}; // 0 - empty; 1 - treasuries; 2 - mob
+    int values[2] = {0, 1}; // 0 - treasuries/nothing; 1 - mob;
 
     for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 2; j++) {
             dungeon[i][j] = values[j];
         }
 
-        for (int j = 2; j > 0; j--) {
-            int k = rand() % (j + 1); 
-            int temp = dungeon[i][j];
-            dungeon[i][j] = dungeon[i][k];
-            dungeon[i][k] = temp;
+        int k = rand() % 2; 
+        if(k == 1){
+            int temp = dungeon[i][0];
+            dungeon[i][0] = dungeon[i][1];
+            dungeon[i][1] = temp;
         }
+        
     }
 }
 
@@ -40,34 +42,28 @@ void dungeon_exploring(){
         each_dungeon_text(current_dungeon);
 
         int way = 0;
-        scanf("%d", &way);
+        do{
+            scanf("%d", &way);
+            if(way < 1 || way > 3){
+                printf("Такого пути не существует");
+            }
+        }while(way < 1 || way > 3);
         clear_screen();
 
-        if(way == 4){
+        if(way == 3){
             open_inventory();
-            add_to_inv("Хилка", 10);
+            // add_to_inv("Хилка", 10);
         }
         else{
             switch(dungeon[current_dungeon][way - 1]){
                 case 0:
-                    empty_dungeon_text();
+                    give_treasuries();
                     break;
-                case 1:
-                    treasuries_dungeon_text();
-                    printf("Положить предмет в сумку?(y/n):");
-                    char ans;
-                    scanf(" %c", &ans);
-                    if(ans == 'Y' || ans == 'y'){
-                        add_to_inv("Хилка", 10);
-                    }
-                    getchar();
-                    break;
-                case 2:
-                    mob_dungeon_text();
+                default:
                     fight(current_dungeon);
             }
             printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
-            getchar();
+            enter_expect();
             current_dungeon++;
         }
 

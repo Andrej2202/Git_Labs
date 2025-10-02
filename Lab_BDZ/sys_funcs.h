@@ -3,5 +3,6 @@
 
 void clear_input();
 void clear_screen();
+void enter_expect();
 
 #endif

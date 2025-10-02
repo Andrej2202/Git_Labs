@@ -1,15 +1,24 @@
 #include <stdio.h>
 #include "init.h"
-#include "player_parametrs.h"
-#include "text_blocks.h"
 #include "sys_funcs.h"
+#include "sys_funcs.h"
+#include "text_blocks.h"
 #include "dungeon_logic.h"
+#include "player_parametrs.h"
 
 
 void class_pick(){
-    class_pick_text();
-    scanf("%d", &player.hero);
+    int res = 0;
+    do{
+        clear_screen();
+        class_pick_text();
+        res = scanf("%d", &player.hero);
+        clear_input();
+    }while(res != 1);
     player.hero -= 1;
+    printf("%d", player.hero);
+    clear_input();
+    enter_expect();
     switch(player.hero) {
         case 0:
             player.hp = 45000; 
@@ -28,6 +37,10 @@ void class_pick(){
             player.strength = 20; 
             player.capacity = 30;
             break;
+        default:
+            player.hp = 400000; 
+            player.strength = 0; 
+            player.capacity = 0;
     }  
     player.max_hp = player.hp;
     player.level = 1;
@@ -44,7 +57,7 @@ void start() {
     do{
         printf("Здравствуй, исследователь подземелий!\n");
         printf("Для продолжения повествования на протяжении всей истории используй enter\n");
-        getchar();
+        enter_expect();
         clear_screen();
         printf("Введи имя игрока:\n");
         scanf("%s", player.name);
