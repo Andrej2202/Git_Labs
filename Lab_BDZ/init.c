@@ -8,17 +8,14 @@
 
 
 void class_pick(){
-    int res = 0;
+    int check = 0;
     do{
         clear_screen();
         class_pick_text();
-        res = scanf("%d", &player.hero);
+        check = scanf("%d", &player.hero);
         clear_input();
-    }while(res != 1);
+    }while(check != 1);
     player.hero -= 1;
-    printf("%d", player.hero);
-    clear_input();
-    enter_expect();
     switch(player.hero) {
         case 0:
             player.hp = 45000; 
@@ -51,20 +48,26 @@ void class_pick(){
 }
 
 
-void start() {
+void start(){
     clear_screen();
     char s = ' ';
+    printf("Здравствуй, исследователь подземелий!\n");
+    printf("Для продолжения повествования на протяжении всей истории используй enter\n");
+    clear_input();
+    clear_screen();
     do{
-        printf("Здравствуй, исследователь подземелий!\n");
-        printf("Для продолжения повествования на протяжении всей истории используй enter\n");
-        enter_expect();
-        clear_screen();
         printf("Введи имя игрока:\n");
-        scanf("%s", player.name);
+        fgets(player.name, sizeof(player.name), stdin);
+        for (int i = 0; player.name[i] != '\0'; i++){
+            if (player.name[i] == '\n'){
+                player.name[i] = '\0';
+                break;
+            }
+        }
         printf("%s, верно?(y/n)\n", player.name);
         scanf(" %c", &s);
+        clear_input();
         clear_screen();
     }while(s != 'y' && s != 'Y');
-
     class_pick();
 }

@@ -48,7 +48,7 @@ void open_inventory(){
     if(item_count == 0){
         printf("Ваш инвентарь пуст");
         clear_input();
-        enter_expect();
+        clear_screen();
     }
     else{
         int command = 0;

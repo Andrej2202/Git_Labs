@@ -1,7 +1,12 @@
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "init.h"
-#include "items.h"
 
 int main(){
-    start();
+    srand(time(NULL));
+    while(1){
+        start();
+    };
 }
 

@@ -1,12 +1,13 @@
-# РљРѕРјРїРёР»РёСЂСѓРµРјС‹Рµ С„Р°Р№Р»С‹ (РѕСЃРЅРѕРІРЅС‹Рµ)
+# Компилируемые файлы (основные)
 *.exe
 *.o
 *.obj
 *.out
 *.a
 *.lib
+*.txt
 
-# РџР°РїРєРё СЃР±РѕСЂРєРё (РѕС‚ РєРѕРјРїРёР»СЏС‚РѕСЂРѕРІ Рё IDE)
+# Папки сборки (от компиляторов и IDE)
 Debug/
 Release/
 build/
@@ -14,11 +15,11 @@ bin/
 dist/
 out/
 
-# Р¤Р°Р№Р»С‹ GCC / MinGW
+# Файлы GCC / MinGW
 *.dSYM/
 *.map
 
-# Р¤Р°Р№Р»С‹ Visual Studio (Windows)
+# Файлы Visual Studio (Windows)
 *.sln
 *.vcxproj
 *.vcxproj.filters
@@ -29,19 +30,19 @@ out/
 *.ncb
 *.opensdf
 
-# Р¤Р°Р№Р»С‹ Code::Blocks / Dev-C++
+# Файлы Code::Blocks / Dev-C++
 *.cbp
 *.layout
 *.dev
 
-# Р›РѕРіРё Рё РІСЂРµРјРµРЅРЅС‹Рµ С„Р°Р№Р»С‹
+# Логи и временные файлы
 *.log
 *.tmp
 *.temp
 *.swp
 *.swo
 
-# РћРїРµСЂР°С†РёРѕРЅРЅР°СЏ СЃРёСЃС‚РµРјР° (Windows)
+# Операционная система (Windows)
 Thumbs.db
 Desktop.ini
 ~$*

@@ -8,20 +8,19 @@
 #include "player_parametrs.h"
 
 
-void fight(int lvl){ 
+int fight(int lvl){ 
     mob_dungeon_text();
-    srand(time(NULL));
     int cube;
     int mob_maxHealth = lvl * 5, mob_health = lvl * 5;
     clear_input();
-    enter_expect();
+    clear_input();
     while(get_mathInfo("hp") > 0 ){
         clear_screen();
         printf("Твое хп: %d/%d, хп моба %d/%d\n\n", get_mathInfo("hp"), get_mathInfo("max_hp"), mob_health, mob_maxHealth);
         cube = rand() % 6  + 1;
         mob_health -= cube;
         printf("Ты ударил скелета и он потерял %dхп\n", cube);
-        enter_expect();
+        clear_input();
         if(mob_health <= 0){
             printf("Скелет рассыпался в пыль\n\n");
             int temp_lvl = get_mathInfo("level"), temp_hp = get_mathInfo("max_hp"), temp_strenght = get_mathInfo("strength");
@@ -36,16 +35,14 @@ void fight(int lvl){
                 }
                 printf("Улучшенные характеристики персонажа: максимальное хп - %d -> %d, базовая сила %d -> %d\n", temp_hp, get_mathInfo("max_hp"), temp_strenght, get_mathInfo("strength"));
             }
-            enter_expect();
-            break;
+            clear_input();
+            return 1;
         }
         printf("Скелет сделал выпад и ловким ударом поранил тебя.\n");
         printf("Ты потерял %dхп\n", cube);
         change_player_param("hp", -1 * cube);
-        enter_expect();
+        clear_input();
         
     }
-    if(get_mathInfo("hp") <= 0){
-        game_end_text(0);
-    }
+    return 0;
 }
