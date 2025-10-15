@@ -4,4 +4,5 @@ extern int dungeon[7][2];
 
 void dungeon_generation();
 void dungeon_exploring();
+
 #endif

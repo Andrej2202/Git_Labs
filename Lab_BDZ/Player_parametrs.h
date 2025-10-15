@@ -2,7 +2,7 @@
 #define PLAYER_PARAMETRS_H
 typedef struct {
     char name[128];
-    int hero, hp, capacity, strength, level, xp, max_hp, addit_strength;
+    int hero, hp, max_hp, capacity, strength, level, xp, addit_strength;
     
 } Param;
 
@@ -12,8 +12,5 @@ extern Param player;
 
 void change_player_param(char *change, int n);
 
-int get_mathInfo(char* ask);
-
-char* get_printInfo(char* ask);
 #endif
 

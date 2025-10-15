@@ -6,20 +6,46 @@
 //логика оружия
 
 //логика брони
-armour items[3] = {0}; // 0 - head; 1 - chest; 2 - legs
+armour_item armour[3] = {
+    {"", -1},
+    {"", -1},
+    {"", -1}
+}; // 0 - head; 1 - chest; 2 - legs
 
-void items_show(){
+void armour_show(){
     for(int i = 0; i < 3; i++){
-        printf("%s: %d %d\n", items[i].name, items[i].heal, items[i].def);
+        switch(i){
+            case 0:
+                printf("Голова:   ");
+                break;
+            case 1:
+                printf("Туловище: ");
+                break;
+            default:
+                printf("Ноги:     ");
+        }
+        if(armour[i].def == -1){
+            printf("Предмет отсутствует.\n");
+        }
+        else{
+            printf("%s:  защита - %d\n", armour[i].name, armour[i].def);
+        }
     }
 }
 
 
-void item_replace(int place, char *name, int def, int heal){
-    if(items[place].def == 0 && items[place].heal == 0){
-        snprintf(items[place].name, sizeof(items[place].name), "%s", name);
-        items[place].heal = heal;
-        items[place].def = def;
+void armour_replace(int place, const char *name, int def){
+    if(armour[place].def == -1){
+        snprintf(armour[place].name, sizeof(armour[place].name), "%s", name);
+        armour[place].def = def;
+    }
+    else{
+        char res;
+        printf("В инвентаре недостаточно места\n");
+        clear_input();
+        do{
+            res = 'y';
+        }while(res != 'y' && res != 'Y');
     }
 }
 //логика инвентаря
@@ -34,9 +60,9 @@ int using_item(int num){
         printf("Эта ячейка инвентаря пуста\n");
         return 0;
     }
-    int temp = get_mathInfo("hp");
+    int temp = player.hp;
     change_player_param("hp", inventory[num].heal);
-    printf("Персонаж выпил зелье\nХп восстановилось %d->%d\n", temp, get_mathInfo("hp"));
+    printf("Персонаж выпил зелье\nХп восстановилось %d->%d\n", temp, player.hp);
     inventory[num] = inventory[item_count - 1];
     item_count--;
     return 1;

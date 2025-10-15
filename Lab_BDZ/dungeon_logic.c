@@ -13,13 +13,10 @@
 
 int dungeon[7][2];
 
-void dungeon_generation(){//Fisher-Yates shuffle
-    
-    int values[2] = {0, 1}; // 0 - treasuries/nothing; 1 - mob;
-
+void dungeon_generation(){
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 2; j++) {
-            dungeon[i][j] = values[j];
+            dungeon[i][j] = j;
         }
 
         int k = rand() % 2; 
@@ -35,29 +32,35 @@ void dungeon_generation(){//Fisher-Yates shuffle
 
 void dungeon_exploring(){
     
-    int current_dungeon = 1, way = 0, check = 0, fight_result = 0;
+    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1;
 
     dungeon_generation();
     entering_dungeons_text();
 
     while(current_dungeon < 7){
-        each_dungeon_text(current_dungeon);
 
         do{
-            check = scanf("%d", &way);
-            if(way < 1 || way > 4){
-                printf("Такого пути не существует");
+            each_dungeon_text();
+            check = scanf("%d", &way);            
+            clear_input();
+            if(way < 1 || way > 5){
+                clear_screen();
+                printf("Такого пути не существует, введите заново\n");
             }
-        }while(check != 1 && (way < 1 || way > 3));
-
+        }while(check != 1 || (way < 1 || way > 5));
         clear_screen();
-
+        
         if(way == 3){
             open_inventory();
         }
         else if(way == 4){
-            saving_to_file();
-            reading_file();
+            save_to_file(current_dungeon);
+        }
+        else if(way == 5){
+            temp = read_file();
+            if(temp != -1){
+                current_dungeon = temp;
+            }
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
