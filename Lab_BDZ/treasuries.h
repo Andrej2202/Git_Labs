@@ -2,12 +2,10 @@
 #define TREASURIES_H
 
 typedef struct {
-    char name[64];
+    char name[14];
     int  class, param;
     
 } item;
-
-extern item possible[3];
 
 void give_treasuries();
 #endif

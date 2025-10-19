@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "fight.h"
-#include "pearson_items.h"
+#include "person_items.h"
 #include "sys_funcs.h"
 #include "text_blocks.h"
 #include "player_parametrs.h"
@@ -11,7 +11,6 @@ int fight(int lvl){
     mob_dungeon_text();
     int cube = 0, mob_maxHealth = lvl * 5, mob_health = lvl * 5;
 
-    clear_input();
     clear_input();
 
     while(player.hp > 0 ){

@@ -9,11 +9,11 @@ int clear_input(){
     return counter;
 }
 
-void start_program(char* enter){
+void yes_no_input(char* enter, char* text){
     int res = 0;
     do
     {
-        printf("Хочешь начать программу? (y/n): ");
+        printf("Хочешь %s? (y/n): ", text);
         scanf(" %c",  enter);
         res = clear_input();
     }while((*enter != 'n' && *enter != 'N' && *enter != 'y' && *enter != 'Y') || res !=0);

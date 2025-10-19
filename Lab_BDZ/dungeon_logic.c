@@ -7,7 +7,7 @@
 #include "sys_funcs.h"
 #include "treasuries.h"
 #include "text_blocks.h"
-#include "pearson_items.h"
+#include "person_items.h"
 #include "dungeon_logic.h"
 
 
@@ -64,13 +64,7 @@ void dungeon_exploring(){
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
-                int sub_way = rand() % 2;
-                if(sub_way == 0){
-                    empty_dungeon_text();
-                }
-                else{
-                    give_treasuries();
-                } 
+                give_treasuries();
             }
             else{
                 fight_result = fight(current_dungeon);

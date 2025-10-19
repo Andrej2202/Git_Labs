@@ -6,8 +6,16 @@ typedef struct {
     
 } Param;
 
+typedef struct{
+    char name[20];
+    int param;
+} items;
 
 extern Param player;
+
+extern items weapon;
+extern items armour[3];
+extern items inventory[10];
 
 
 int change_player_param(char *change, int n);

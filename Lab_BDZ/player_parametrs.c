@@ -4,7 +4,13 @@
 
 
 Param player;
-
+items weapon = {"", -1};
+items armour[3] = {
+    {"", -1},
+    {"", -1},
+    {"", -1}
+};
+items inventory[10] = {0};
 
 int change_player_param(char *change, int n){
     if(my_strcmp(change, "hp") == 0){

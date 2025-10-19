@@ -70,19 +70,17 @@ void empty_dungeon_text(){//тут чет не так
     printf("ѕеред вами пуста€ пещера\n");
     // тут типо фразы героев разные
     clear_input();
-    clear_input();
     clear_screen();
 
 }
 
 
-void treasuries_dungeon_text(){
+void treasuries_dungeon_text(char *item){
     printf("¬ этой пещере ничего нет, хот€... ѕрисмотревшись, герой заметил что-то странное посреди пещеры\n");
     // ну только дл€ каждого класса оружие будет под его класс ваще гениальна€ темка, просто ультракласс
     clear_input();
+    printf("Ёто... Ёто %s\n", item);
     clear_input();
-    printf("Ёто была скл€нка с надписью: хилка\n");
-    clear_screen();
 }
 
 
@@ -100,5 +98,4 @@ void game_end_text(int end){
         printf("“ы вышел на свет и вдохнул полной грудью свежий воздух");
     }
     clear_input();
-    clear_screen();
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "pearson_items.h"
+#include "person_items.h"
 #include "saving.h"
 #include "sys_funcs.h"
 #include "player_parametrs.h"
@@ -13,9 +13,19 @@ int save_to_file(int dungeon){
         clear_input();
         return 1;
     }
+    //основные параметры
+    fprintf(file, "%d|%d|%d|%d|%d|%d\n", player.hp, player.max_hp, player.strength, player.level, player.xp, dungeon);
+    //оружие
+    fprintf(file, "%s|%d\n", weapon.name, weapon.param);
+    //брон€
+    for(int i = 0; i < 3; i++){
+        fprintf(file, "%s|%d\n", armour[i].name, armour[i].param);
+    }
+    //инвентарь
+    for(int i = 0; i < 10; i++){
+        fprintf(file, "%s|%d\n", inventory[i].name, inventory[i].param);
+    }
 
-    fprintf(file, "%s|%d|%d|%d|%d|%d|%d", player.name, player.hp, player.max_hp, player.strength, player.level, player.xp, dungeon);
-    //тут еще влепить инвентар€ сохранение, но эт чет лютое гг
     printf("—охранение прошло успешно.");
     clear_input();
     fclose(file);
@@ -24,7 +34,7 @@ int save_to_file(int dungeon){
 
 
 int read_file(){
-    char result[64], name[64];
+    char result[64];
     int hp = 0, max_hp = 0, strength = 0, level = 0, xp = 0, dungeon = 0, i = 0, fl = 0;
     FILE *file = fopen("data.txt", "r");
     if (file == NULL) {
@@ -33,33 +43,30 @@ int read_file(){
         return -1;
     }
     fscanf(file, "%s", result); // пишут что еще огр длинны надо, почитаем
-    printf("%s\n", result);
-    for(i = 0; result[i] != '\0'; i++){
+    printf("%s\n", result); //считали основные параметры
+    for(i = 0; result[i] != '\n'; i++){
         if(result[i] == '|'){
             fl++;
         }
         else{
             switch(fl){
                 case 0:
-                    name[i] = result[i];
-                    break;
-                case 1:
                     hp *= 10;
                     hp += result[i] - '0';
                     break;
-                case 2:
+                case 1:
                     max_hp *= 10;
                     max_hp += result[i] - '0';
                     break;
-                case 3:
+                case 2:
                     strength *= 10;
                     strength += result[i] - '0';
                     break;
-                case 4:
+                case 3:
                     level *= 10;
                     level += result[i] - '0';
                     break;
-                case 5:
+                case 4:
                     xp *= 10;
                     xp += result[i] - '0';
                     break;
@@ -69,12 +76,15 @@ int read_file(){
             }
         }
     }
+    
     player.hp = hp;
     player.max_hp = max_hp;
     player.strength = strength;
     player.level = level;
+    // нужно считать еще оружие, броню и инвентарь
     printf("«агрузка сохранени€ прошла успешно.");
     clear_input();
     fclose(file);
     return dungeon;
+    
 }
