@@ -1,7 +1,7 @@
 #ifndef ITEMS_H
 #define ITEMS_H
 typedef struct{
-    char name[10];
+    char name[20];
     int heal;
 } inv_item;
 

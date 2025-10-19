@@ -10,7 +10,7 @@ typedef struct {
 extern Param player;
 
 
-void change_player_param(char *change, int n);
+int change_player_param(char *change, int n);
 
 #endif
 

@@ -7,6 +7,7 @@ typedef struct {
     
 } item;
 
+extern item possible[3];
 
 void give_treasuries();
 #endif

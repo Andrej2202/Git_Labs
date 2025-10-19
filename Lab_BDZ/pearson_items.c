@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "items.h"
+#include "pearson_items.h"
 #include"sys_funcs.h"
 #include "player_parametrs.h"
 
@@ -58,15 +58,31 @@ int using_item(int num){
     num--;
     if(num < 0 || num >= item_count){
         printf("Эта ячейка инвентаря пуста\n");
-        return 0;
+        clear_input();
+        clear_input();
+        return 1;
     }
     int temp = player.hp;
     change_player_param("hp", inventory[num].heal);
     printf("Персонаж выпил зелье\nХп восстановилось %d->%d\n", temp, player.hp);
     inventory[num] = inventory[item_count - 1];
     item_count--;
-    return 1;
+    return 0;
 
+}
+
+
+int delete_item(int num){
+    num--;
+    if(num < 0 || num >= item_count){
+        printf("Эта ячейка инвентаря пуста\n");
+        clear_input();
+        clear_input();
+        return 1;
+    }
+    inventory[num] = inventory[item_count - 1];
+    item_count--;
+    return 0;
 }
 
 
@@ -85,15 +101,20 @@ void open_inventory(){
             printf("\nИспользовать предмета из инвентаря - 1, удалить предмет - 2, выйти из инвентаря - 3\n");
             scanf("%d", &command);
             if(command == 1){
-                int it, check;
+                int num, check;
                 do{
                     printf("Какой номер хочешь использовать?:");
-                    scanf("%d", &it);
-                    check = using_item(it);
-                }while(check!=1);
+                    scanf("%d", &num);
+                    check = using_item(num);
+                }while(check == 0 && item_count != 0);
             }
             else if(command == 2){
-                printf(" ");
+                int num, check;
+                do{
+                    printf("Какой номер хочешь убрать из инвентаря?:");
+                    scanf("%d", &num);
+                    check = delete_item(num);
+                }while(check == 0 && item_count != 0);
             }
             clear_screen();
         }while(command != 3);
@@ -114,7 +135,7 @@ void add_to_inv(const char *name, int heal_ammount){
     }
 
     if(item_count != 10){
-        snprintf(inventory[item_count].name, sizeof(inventory[item_count].name), "%s", name);
+        string_replace(name, inventory[item_count].name);
         inventory[item_count].heal = heal_ammount; 
         item_count++;
     }

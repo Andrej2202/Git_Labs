@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "items.h"
+#include "pearson_items.h"
 #include "saving.h"
 #include "sys_funcs.h"
 #include "player_parametrs.h"

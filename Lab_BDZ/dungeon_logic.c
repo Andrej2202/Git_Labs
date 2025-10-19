@@ -3,17 +3,17 @@
 #include <time.h>
 #include <string.h>
 #include "fight.h" 
-#include "items.h"
 #include "saving.h"
 #include "sys_funcs.h"
 #include "treasuries.h"
 #include "text_blocks.h"
+#include "pearson_items.h"
 #include "dungeon_logic.h"
 
 
 int dungeon[7][2];
 
-void dungeon_generation(){
+int dungeon_generation(){
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 2; j++) {
             dungeon[i][j] = j;
@@ -25,8 +25,8 @@ void dungeon_generation(){
             dungeon[i][0] = dungeon[i][1];
             dungeon[i][1] = temp;
         }
-        
     }
+    return 0;
 }
 
 

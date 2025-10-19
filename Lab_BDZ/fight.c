@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "fight.h"
-#include "items.h"
+#include "pearson_items.h"
 #include "sys_funcs.h"
 #include "text_blocks.h"
 #include "player_parametrs.h"
@@ -27,7 +27,7 @@ int fight(int lvl){
             int temp_lvl = player.level, temp_hp = player.max_hp, temp_strenght = player.strength;
             change_player_param("xp", lvl * 5);
             printf("Герой получил %d xp за победу\n", lvl * 5);
-            if(temp_lvl!= player.level){
+            if(temp_lvl != player.level){
                 int count_heals = player.level - temp_lvl;
                 printf("Уровень персонажа повышен %d -> %d\n", temp_lvl, player.level);
                 printf("Герой получил %d больших хилок\n", count_heals);
