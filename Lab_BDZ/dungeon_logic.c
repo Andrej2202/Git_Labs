@@ -61,6 +61,10 @@ void dungeon_exploring(){
             if(temp != -1){
                 current_dungeon = temp;
             }
+            else{
+                printf("Ошибка загрузки сохранения.");
+                clear_input();
+            }
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){

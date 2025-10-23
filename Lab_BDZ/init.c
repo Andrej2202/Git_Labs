@@ -19,25 +19,21 @@ void class_pick(){
     switch(player.hero) {
         case 0:
             player.hp = 45000; 
-            player.strength = 25; 
-            player.capacity = 80;
+            player.strength = 25;
             break;
 
         case 1:
             player.hp = 150000; 
-            player.strength = 50; 
-            player.capacity = 60;
+            player.strength = 50;
             break;
 
         case 2:
             player.hp = 400000; 
-            player.strength = 20; 
-            player.capacity = 30;
+            player.strength = 20;
             break;
         default:
             player.hp = 400000; 
-            player.strength = 0; 
-            player.capacity = 0;
+            player.strength = 0;
     }  
     player.max_hp = player.hp;
     player.level = 1;

@@ -41,6 +41,18 @@ int string_replace(const char *s1, char *s2){
     return 0;
 }
 
+
+int remove_n(char *s){
+    int i = 0;
+    if(s == NULL) return -1;
+    while(s[i] != '\n' && s[i] != '\0'){
+        i++;
+    }
+    s[i] = '\0';
+    return 0;
+}
+
+
 void clear_screen() {
 #ifdef _WIN32
     system("cls");

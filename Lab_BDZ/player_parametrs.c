@@ -4,11 +4,11 @@
 
 
 Param player;
-items weapon = {"", -1};
+items weapon = {"Базовый ", 0};
 items armour[3] = {
-    {"", -1},
-    {"", -1},
-    {"", -1}
+    {"Базовый шлем", 0},
+    {"Базовая кираса", 0},
+    {"Базовые поножи", 0}
 };
 items inventory[10] = {0};
 
@@ -18,9 +18,6 @@ int change_player_param(char *change, int n){
     }
     if(my_strcmp(change, "max_hp") == 0){
         player.max_hp += n;
-    }
-    if(my_strcmp(change, "capacity") == 0){
-        player.capacity += n;
     }
     if(my_strcmp(change, "strength") == 0){
         player.strength += n;

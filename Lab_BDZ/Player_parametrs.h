@@ -2,12 +2,12 @@
 #define PLAYER_PARAMETRS_H
 typedef struct {
     char name[128];
-    int hero, hp, max_hp, capacity, strength, level, xp, addit_strength;
+    int hero, hp, max_hp, strength, level, xp, addit_strength;
     
 } Param;
 
 typedef struct{
-    char name[20];
+    char name[30];
     int param;
 } items;
 

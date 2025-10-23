@@ -5,12 +5,12 @@
 #include"person_items.h"
 #include "text_blocks.h"
 
-void give_treasuries(){
-    item possible[6] = { // 0 - зашита, 1 - оружие, 2 - предметы
-        {"Шлем", 0, 20},
-        {"Кираса", 0, 50},
-        {"Поножи", 0, 10},
-        {"Меч", 1, 40},
+int give_treasuries(){
+    item possible[6] = { // 0 - 2 - зашита, 3 - оружие, 4 - предметы
+        {"Ultra Pro Kiber MAX Шлем", 0, 20},
+        {"Ultra Pro Kiber MAX Кираса", 1, 50},
+        {"Ultra Pro Kiber MAX Поножи", 2, 10},
+        {"Ultra Pro Kiber MAX Меч", 3, 40},
         {"Малая хилка", 2, 10},
         {"Большая хилка", 2, 20}
     };
@@ -20,14 +20,15 @@ void give_treasuries(){
     }
     else{
         treasuries_dungeon_text(possible[item_num].name);
-        if(possible[item_num].class == 0){
-
+        if(possible[item_num].class < 3){
+            armour_replace(possible[item_num].class, possible[item_num].name, possible[item_num].param);
         }
-        else if(possible[item_num].class == 1){
-
+        else if(possible[item_num].class == 4){
+            weapon_replace(possible[item_num].name, possible[item_num].param);
         }
         else{
             add_to_inv(possible[item_num].name, possible[item_num].param);
         }
     }
+    return 0;
 }

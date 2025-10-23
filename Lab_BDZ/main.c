@@ -18,9 +18,6 @@ int main(){
     save_to_file(0);
     read_file();
     */
-
-
-
     //armour_show();
     /*
     for(int i = 0; i < 10; i++){
@@ -30,6 +27,7 @@ int main(){
     add_to_inv("Мини хилка", 10);
     open_inventory();
     */
+   
     char enter, text[] = "начать программу";
     srand(time(NULL));
     while(1){

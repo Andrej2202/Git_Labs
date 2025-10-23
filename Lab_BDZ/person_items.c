@@ -5,12 +5,7 @@
 
 //логика оружия
 void weapon_show(){
-    if(weapon.param == -1){
-        printf("Предмет отсутствует.\n");
-    }
-    else{
-        printf("Текущее оружие: %s, урон: %d", weapon.name, weapon.param);
-    }
+    printf("Текущее оружие: \n%s, урон: %d\n\n", weapon.name, weapon.param);
 }
 
 
@@ -28,6 +23,7 @@ void weapon_replace(const char *name, int param){
 
 //логика брони
 void armour_show(){
+    printf("Броня:\n");
     for(int i = 0; i < 3; i++){
         switch(i){
             case 0:
@@ -39,22 +35,18 @@ void armour_show(){
             default:
                 printf("Ноги:     ");
         }
-        if(armour[i].param == -1){
-            printf("Предмет отсутствует.\n");
-        }
-        else{
-            printf("%s:  защита - %d\n", armour[i].name, armour[i].param);
-        }
+        printf("%s:  защита - %d\n", armour[i].name, armour[i].param);
     }
+    printf("\n");
 }
 
 
 void armour_replace(int place, const char *name, int param){
-    if(armour[place].param != -1){
+    if(armour[place].param != 0){
         printf("Данный слот брони уже занят. Хотите заменить?\n");
         printf("%s -> %s \nИзменение характеристик: %d -> %d", armour[place].name, name, armour[place].param, param);
     }
-    if(armour[place].param == -1){
+    if(armour[place].param == 0){
         string_replace(name, armour[place].name);
         armour[place].param = param;
     }
@@ -99,6 +91,9 @@ int delete_item(int num){
 
 
 void open_inventory(){
+    
+    armour_show();
+    weapon_show();
     if(item_count == 0){
         printf("Ваш инвентарь пуст");
         clear_input();
