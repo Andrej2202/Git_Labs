@@ -2,13 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "init.h"
-#include "person_items.h"
-
 #include "sys_funcs.h"
+#include "player_parametrs.h"
+
+// для тестов
+/*
+#include "person_items.h"
 #include "saving.h"
-
-
-//#include "items.h"
+*/
 
 int main(){
 
@@ -38,7 +39,6 @@ int main(){
         else{
             return 0;
         }
-        
     };
     
 }

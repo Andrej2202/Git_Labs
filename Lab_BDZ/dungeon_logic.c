@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
 #include "fight.h" 
 #include "saving.h"
 #include "sys_funcs.h"
@@ -9,21 +8,20 @@
 #include "text_blocks.h"
 #include "person_items.h"
 #include "dungeon_logic.h"
+#include "player_parametrs.h"
 
 
-int dungeon[7][2];
-
-int dungeon_generation(){
+int dungeon_generation(int* dungeon){
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 2; j++) {
-            dungeon[i][j] = j;
+            *(dungeon + i * 2 + j) = j;
         }
 
         int k = rand() % 2; 
         if(k == 1){
-            int temp = dungeon[i][0];
-            dungeon[i][0] = dungeon[i][1];
-            dungeon[i][1] = temp;
+            int temp = *(dungeon + i * 2 + 0);
+            *(dungeon + i * 2 + 0) = *(dungeon + i * 2 + 1);
+            *(dungeon + i * 2 + 1) = temp;
         }
     }
     return 0;
@@ -31,10 +29,11 @@ int dungeon_generation(){
 
 
 void dungeon_exploring(){
-    
+    int dungeon[7][2];
     int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1;
 
-    dungeon_generation();
+    dungeon_generation(&dungeon[0][0]);
+
     entering_dungeons_text();
 
     while(current_dungeon < 7){
@@ -57,11 +56,8 @@ void dungeon_exploring(){
             save_to_file(current_dungeon);
         }
         else if(way == 5){
-            temp = read_file();
-            if(temp != -1){
-                current_dungeon = temp;
-            }
-            else{
+            temp = read_file(0, &current_dungeon);
+            if(temp == -1){
                 printf("Ошибка загрузки сохранения.");
                 clear_input();
             }
@@ -84,6 +80,11 @@ void dungeon_exploring(){
         if(current_dungeon != 7){
             clear_screen();
         }
+    }
+    item_count = 0;
+    temp = clear_player_parametrs();
+    if(temp != 0){
+        printf("ошибка очистки параметров персонажа"); 
     }
     if(fight_result == 0){
         game_end_text(0);

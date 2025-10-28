@@ -19,6 +19,7 @@ extern items inventory[10];
 
 
 int change_player_param(char *change, int n);
+int clear_player_parametrs();
 
 #endif
 

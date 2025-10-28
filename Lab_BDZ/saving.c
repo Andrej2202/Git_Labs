@@ -146,13 +146,18 @@ int read_armour_and_inv(char *res, int place, int isInv){
 }
 
 
-int read_file(){
+int read_file(int file_num, int* cur_dungeon){
     char result[64];
     int  counter = 0, dungeon = 0, armour_place = 0, inv_place = 0;
-    FILE *file = fopen("data.txt", "r");
+    FILE *file;
+    if(file_num == 0){
+        file = fopen("data.txt", "r");
+    }
+    else{
+        file = fopen("clear_data.txt", "r");
+    }
+
     if (file == NULL) {
-        printf("Ошибка открытия файла\n");
-        clear_input();
         return -1;
     }
     do{
@@ -182,11 +187,12 @@ int read_file(){
                 printf("Error: you're out from save");
                 return -1;
         }
-        printf("%s\n", result);
+        // printf("%s\n", result);
     }while(my_strcmp("===END_OF_SAVE===", result));
+    *cur_dungeon = dungeon;
     printf("Загрузка сохранения прошла успешно.");
     clear_input();
     fclose(file);
-    return dungeon;
+    return 0;
     
 }

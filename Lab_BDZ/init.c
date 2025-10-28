@@ -14,7 +14,7 @@ void class_pick(){
         class_pick_text();
         check = scanf("%d", &player.hero);
         clear_input();
-    }while(check != 1);
+    }while(check != 1 && ((player.hero < 0 || player.hero > 2) && (player.hero != 78)));
     player.hero -= 1;
     switch(player.hero) {
         case 0:
@@ -33,7 +33,7 @@ void class_pick(){
             break;
         default:
             player.hp = 400000; 
-            player.strength = 0;
+            player.strength = 1;
     }  
     player.max_hp = player.hp;
     player.level = 1;

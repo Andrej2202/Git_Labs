@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "sys_funcs.h"
+#include "saving.h"
 #include "player_parametrs.h"
 
 
@@ -38,3 +39,9 @@ int change_player_param(char *change, int n){
     return 0;
 }
 
+
+int clear_player_parametrs(){
+    int temp = 0;
+    read_file(1, &temp);
+    return 0;
+}
