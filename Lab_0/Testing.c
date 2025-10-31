@@ -98,29 +98,6 @@ int main(){
             printf("X1 = %.3g\n", x1);
             printf("X2 = %.3g\n", x2);
         }
-
-        printf("\nКоординаты вершины:\n");
-        double xPoint = -1 * b / 2 * a, yPoint = a * (xPoint * xPoint) + b * xPoint + c;
-        printf("X вершины = %.3g, Y вершины = %.3g\n", xPoint, yPoint);
-        
-        printf("\nПроизводная:\n");
-        double der1 = 2 * a, der2 = b;
-        if(der2 < 0){
-            printf("Y = %.3g * x - %.3g\n", der1, -1 * der2);
-        }
-        else{
-            printf("Y = %.3g * x + %.3g\n", der1, der2);
-        }
-        double zero_der = 0.0;
-        zero_der = -1 * der2 / der1;
-        if(a < 0){
-            printf("При x ? (-?; %.3g) f`(x) > 0 => функция возрастает\n", zero_der);
-            printf("При x ? (%.3g; ?)  f`(x) < 0 => функция убывает\n\n", zero_der);
-        }
-        else{
-            printf("При x ? (-?; %.3g) f`(x) < 0 => функция убывает\n", zero_der);
-            printf("При x ? (%.3g; ?)  f`(x) > 0 => функция возрастает\n\n", zero_der);
-        }
         
     }
 
