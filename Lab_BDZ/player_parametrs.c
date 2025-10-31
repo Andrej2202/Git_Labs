@@ -42,6 +42,6 @@ int change_player_param(char *change, int n){
 
 int clear_player_parametrs(){
     int temp = 0;
-    read_file(1, &temp);
+    read_file(1, &temp, &temp);
     return 0;
 }

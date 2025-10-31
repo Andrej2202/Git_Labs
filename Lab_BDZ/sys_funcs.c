@@ -30,7 +30,7 @@ int my_strcmp(const char *s1, const char *s2){
 
 int string_replace(const char *s1, char *s2){
     if (s1 == NULL || s2 == NULL) {
-        return -1;
+        return 1;
     }
 
     while (*(s1) != '\0') {

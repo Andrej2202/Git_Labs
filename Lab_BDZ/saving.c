@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "person_items.h"
 #include "saving.h"
 #include "sys_funcs.h"
 #include "player_parametrs.h"
@@ -12,7 +11,7 @@
      my_strcmp("===END_OF_SAVE===", (s)) == 0)
 
 
-int save_to_file(int dungeon){
+int save_to_file(int dungeon, int item_count){
     FILE *file = fopen("data.txt", "w"); // w - перезапись a - дозапись
     if (file == NULL) {
         printf("Ошибка открытия файла\n");
@@ -21,7 +20,7 @@ int save_to_file(int dungeon){
     }
     //основные параметры
     fprintf(file, "===MAIN_PARAMETRS===\n");
-    fprintf(file, "%d|%d|%d|%d|%d|%d\n", player.hp, player.max_hp, player.strength, player.level, player.xp, dungeon);
+    fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player.hp, player.max_hp, player.strength, player.level, player.xp, dungeon, item_count);
     //оружие
     fprintf(file, "===WEAPON===\n");
     fprintf(file, "%s|%d\n", weapon.name, weapon.param);
@@ -43,9 +42,9 @@ int save_to_file(int dungeon){
 }
 
 
-int read_mainParam(char *res){
-    int hp = 0, max_hp = 0, strength = 0, level = 0, xp = 0, dungeon = 0, fl = 0;
-    if(res == NULL) return -1;
+int read_mainParam(char *res, int* cur_dungeon, int* item_count){
+    int hp = 0, max_hp = 0, strength = 0, level = 0, xp = 0, dungeon = 0, item_c = 0,  fl = 0;
+    if(res == NULL) return 1;
 
     for(int i = 0; res[i] != '\0'; i++){
         if(res[i] == '|'){
@@ -73,9 +72,16 @@ int read_mainParam(char *res){
                     xp *= 10;
                     xp += res[i] - '0';
                     break;
-                default:
+                case 5:
                     dungeon *= 10;
                     dungeon += res[i] - '0';
+                    break;
+                case 6:
+                    item_c *= 10;
+                    item_c += res[i] - '0';
+                    break;
+                default:
+                 return 1;
             }
         }
     } 
@@ -83,14 +89,16 @@ int read_mainParam(char *res){
     player.max_hp = max_hp;
     player.strength = strength;
     player.level = level;
-    return dungeon;
+    *item_count = item_c;
+    *cur_dungeon = dungeon;
+    return 0;
 }
 
 
 int read_weapon(char *res){
     int fl = 0, param = 0, result = 0;
     char name[64] = ""; 
-    if(res == NULL) return -1;
+    if(res == NULL) return 1;
 
     for(int i = 0; res[i] != '\0'; i++){
         if(res[i] == '|'){
@@ -116,7 +124,7 @@ int read_weapon(char *res){
 int read_armour_and_inv(char *res, int place, int isInv){
     int fl = 0, param = 0, result = 0;
     char name[64] = ""; 
-    if(res == NULL) return -1;
+    if(res == NULL) return 1;
 
     for(int i = 0; res[i] != '\0'; i++){
         if(res[i] == '|'){
@@ -146,9 +154,9 @@ int read_armour_and_inv(char *res, int place, int isInv){
 }
 
 
-int read_file(int file_num, int* cur_dungeon){
+int read_file(int file_num, int* cur_dungeon, int* item_count){
     char result[64];
-    int  counter = 0, dungeon = 0, armour_place = 0, inv_place = 0;
+    int  counter = 0, armour_place = 0, inv_place = 0, error_count = 0;
     FILE *file;
     if(file_num == 0){
         file = fopen("data.txt", "r");
@@ -170,28 +178,33 @@ int read_file(int file_num, int* cur_dungeon){
         }
         switch(counter){
             case 1:
-                dungeon = read_mainParam(result);
+                error_count += read_mainParam(result, cur_dungeon, item_count);
                 break;
             case 2:
-                read_weapon(result);
+                error_count += read_weapon(result);
                 break;
             case 3:
-                read_armour_and_inv(result, armour_place, 0);
+                error_count += read_armour_and_inv(result, armour_place, 0);
                 armour_place++;
                 break;
             case 4:
-                read_armour_and_inv(result, inv_place, 1);
+                error_count += read_armour_and_inv(result, inv_place, 1);
                 inv_place++;
                 break;
             default:
                 printf("Error: you're out from save");
-                return -1;
+                return 1;
+        }
+        if(error_count != 0){
+            printf("Error in switch");
+            return 1;
         }
         // printf("%s\n", result);
     }while(my_strcmp("===END_OF_SAVE===", result));
-    *cur_dungeon = dungeon;
-    printf("Загрузка сохранения прошла успешно.");
-    clear_input();
+    if(file_num == 0){
+        printf("Загрузка сохранения прошла успешно.");
+        clear_input();
+    }
     fclose(file);
     return 0;
     

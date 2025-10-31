@@ -30,14 +30,13 @@ int dungeon_generation(int* dungeon){
 
 void dungeon_exploring(){
     int dungeon[7][2];
-    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1;
+    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1, item_count = 0;
 
     dungeon_generation(&dungeon[0][0]);
 
     entering_dungeons_text();
 
     while(current_dungeon < 7){
-
         do{
             each_dungeon_text();
             check = scanf("%d", &way);            
@@ -50,24 +49,25 @@ void dungeon_exploring(){
         clear_screen();
         
         if(way == 3){
-            open_inventory();
+            open_inventory(&item_count);
+            clear_input();
         }
         else if(way == 4){
-            save_to_file(current_dungeon);
+            save_to_file(current_dungeon, item_count);
         }
         else if(way == 5){
-            temp = read_file(0, &current_dungeon);
-            if(temp == -1){
+            temp = read_file(0, &current_dungeon, &item_count);
+            if(temp != 0){
                 printf("Ошибка загрузки сохранения.");
                 clear_input();
             }
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
-                give_treasuries();
+                give_treasuries(&item_count);
             }
             else{
-                fight_result = fight(current_dungeon);
+                fight(current_dungeon, &item_count, &fight_result);
                 if(fight_result == 0){
                     break;
                 }

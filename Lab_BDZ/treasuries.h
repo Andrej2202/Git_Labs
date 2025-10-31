@@ -7,5 +7,5 @@ typedef struct {
     
 } item;
 
-int give_treasuries();
+int give_treasuries(int* item_count);
 #endif

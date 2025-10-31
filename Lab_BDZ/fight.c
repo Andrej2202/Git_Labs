@@ -7,10 +7,9 @@
 #include "player_parametrs.h"
 
 
-int fight(int lvl){ 
+int fight(int lvl, int* item_count, int* fight_result){ 
     mob_dungeon_text();
     int cube = 0, mob_maxHealth = lvl * 5, mob_health = lvl * 5;
-
     clear_input();
 
     while(player.hp > 0 ){
@@ -31,12 +30,13 @@ int fight(int lvl){
                 printf("Уровень персонажа повышен %d -> %d\n", temp_lvl, player.level);
                 printf("Герой получил %d больших хилок\n", count_heals);
                 for(int i = 0; i < count_heals; i++){
-                    add_to_inv("Большая хилка", 20);
+                    add_to_inv("Большая хилка", 20, item_count);
                 }
                 printf("Улучшенные характеристики персонажа: максимальное хп - %d -> %d, базовая сила %d -> %d\n", temp_hp, player.max_hp, temp_strenght, player.strength);
             }
             clear_input();
-            return 1;
+            *fight_result = 1;
+            return 0;
         }
 
         printf("Скелет сделал выпад и ловким ударом поранил тебя.\n");
@@ -44,5 +44,6 @@ int fight(int lvl){
         change_player_param("hp", -1 * cube);
         clear_input();
     }
+    *fight_result = 0;
     return 0;
 }
