@@ -11,7 +11,7 @@
      my_strcmp("===END_OF_SAVE===", (s)) == 0)
 
 
-int save_to_file(int dungeon, int item_count){
+int save_to_file(int dungeon, int item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
     FILE *file = fopen("data.txt", "w"); // w - перезапись a - дозапись
     if (file == NULL) {
         printf("Ошибка открытия файла\n");
@@ -20,10 +20,10 @@ int save_to_file(int dungeon, int item_count){
     }
     //основные параметры
     fprintf(file, "===MAIN_PARAMETRS===\n");
-    fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player.hp, player.max_hp, player.strength, player.level, player.xp, dungeon, item_count);
+    fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player->hp, player->max_hp, player->strength, player->level, player->xp, dungeon, item_count);
     //оружие
     fprintf(file, "===WEAPON===\n");
-    fprintf(file, "%s|%d\n", weapon.name, weapon.param);
+    fprintf(file, "%s|%d\n", weapon->name, weapon->param);
     //броня
     fprintf(file, "===ARMOUR===\n");
     for(int i = 0; i < 3; i++){
@@ -42,7 +42,7 @@ int save_to_file(int dungeon, int item_count){
 }
 
 
-int read_mainParam(char *res, int* cur_dungeon, int* item_count){
+int read_mainParam(char *res, int* cur_dungeon, int* item_count, Parametrs *player){
     int hp = 0, max_hp = 0, strength = 0, level = 0, xp = 0, dungeon = 0, item_c = 0,  fl = 0;
     if(res == NULL) return 1;
 
@@ -85,17 +85,17 @@ int read_mainParam(char *res, int* cur_dungeon, int* item_count){
             }
         }
     } 
-    player.hp = hp;
-    player.max_hp = max_hp;
-    player.strength = strength;
-    player.level = level;
+    player->hp = hp;
+    player->max_hp = max_hp;
+    player->strength = strength;
+    player->level = level;
     *item_count = item_c;
     *cur_dungeon = dungeon;
     return 0;
 }
 
 
-int read_weapon(char *res){
+int read_weapon(char *res, items *weapon){
     int fl = 0, param = 0, result = 0;
     char name[64] = ""; 
     if(res == NULL) return 1;
@@ -115,13 +115,13 @@ int read_weapon(char *res){
             }
         }
     } 
-    weapon.param = param;
-    result = string_replace(name, weapon.name);
+    weapon->param = param;
+    result = string_replace(name, weapon->name);
     return result;
 }
 
 
-int read_armour_and_inv(char *res, int place, int isInv){
+int read_armour_and_inv(char *res, int place, items *inv_armour){
     int fl = 0, param = 0, result = 0;
     char name[64] = ""; 
     if(res == NULL) return 1;
@@ -140,21 +140,15 @@ int read_armour_and_inv(char *res, int place, int isInv){
                     param += res[i] - '0';
             }
         }
-    } 
-    if(isInv == 0){
-        armour[place].param = param;
-        result = string_replace(name, armour[place].name);
-        return result;
     }
     
-
-    inventory[place].param = param;
-    result = string_replace(name, inventory[place].name);
+    inv_armour[place].param = param;
+    result = string_replace(name, inv_armour[place].name);
     return result;
 }
 
 
-int read_file(int file_num, int* cur_dungeon, int* item_count){
+int read_file(int file_num, int* cur_dungeon, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
     char result[64];
     int  counter = 0, armour_place = 0, inv_place = 0, error_count = 0;
     FILE *file;
@@ -178,17 +172,17 @@ int read_file(int file_num, int* cur_dungeon, int* item_count){
         }
         switch(counter){
             case 1:
-                error_count += read_mainParam(result, cur_dungeon, item_count);
+                error_count += read_mainParam(result, cur_dungeon, item_count, player);
                 break;
             case 2:
-                error_count += read_weapon(result);
+                error_count += read_weapon(result, weapon);
                 break;
             case 3:
-                error_count += read_armour_and_inv(result, armour_place, 0);
+                error_count += read_armour_and_inv(result, armour_place, armour);
                 armour_place++;
                 break;
             case 4:
-                error_count += read_armour_and_inv(result, inv_place, 1);
+                error_count += read_armour_and_inv(result, inv_place, inventory);
                 inv_place++;
                 break;
             default:

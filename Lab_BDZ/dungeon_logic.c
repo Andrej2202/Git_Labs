@@ -8,6 +8,8 @@
 #include "text_blocks.h"
 #include "person_items.h"
 #include "dungeon_logic.h"
+#include "player_parametrs.h"
+
 
 
 int dungeon_generation(int* dungeon){
@@ -50,7 +52,7 @@ void dungeon_exploring(){
 
     entering_dungeons_text(&player);
     //open_inventory(&item_count, inventory, &weapon, armour, &player);
-    /*
+
     while(current_dungeon < 7){
         do{
             each_dungeon_text();
@@ -64,14 +66,14 @@ void dungeon_exploring(){
         clear_screen();
         
         if(way == 3){
-            open_inventory(&item_count, inventory, &weapon, armour, &player);
+            open_inventory(&item_count, inventory, armour, &weapon, &player);
             clear_input();
         }
         else if(way == 4){
-            save_to_file(current_dungeon, item_count);
+            save_to_file(current_dungeon, item_count, inventory, armour, &weapon, &player);
         }
         else if(way == 5){
-            temp = read_file(0, &current_dungeon, &item_count);
+            temp = read_file(0, &current_dungeon, &item_count, inventory, armour, &weapon, &player); // убрать 0 в начале
             if(temp != 0){
                 printf("Ошибка загрузки сохранения.");
                 clear_input();
@@ -79,10 +81,10 @@ void dungeon_exploring(){
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
-                give_treasuries(&item_count);
+                give_treasuries(&item_count, inventory, armour, &weapon, &player);
             }
             else{
-                fight(current_dungeon, &item_count, &fight_result);
+                fight(current_dungeon, &item_count, &fight_result, inventory, armour, &weapon, &player);
                 if(fight_result == 0){
                     break;
                 }
@@ -96,15 +98,16 @@ void dungeon_exploring(){
             clear_screen();
         }
     }
-    temp = clear_player_parametrs();
+    /*
+    temp = clear_player_parametrs(); очистка файла сохранения
     if(temp != 0){
         printf("ошибка очистки параметров персонажа"); 
     }
+    */ 
     if(fight_result == 0){
         game_end_text(0);
     }
     else{
         game_end_text(1);
-    }
-    */    
+    } 
 }

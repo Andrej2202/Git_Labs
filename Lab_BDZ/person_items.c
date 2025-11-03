@@ -99,7 +99,7 @@ int delete_item(int num, int* item_count, items *inventory){
 }
 
 
-void open_inventory(int* item_count, items *inventory, items *weapon, items *armour, Parametrs *player){
+void open_inventory(int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
     int command = 0, fl = 0;
     do{
         armour_show(armour);
@@ -141,7 +141,7 @@ void open_inventory(int* item_count, items *inventory, items *weapon, items *arm
 }
 
 
-void add_to_inv(const char *name, int param_ammount, int* item_count, items *inventory, items *weapon, items *armour, Parametrs *player){
+void add_to_inv(const char *name, int param_ammount, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
     char temp = 'n', text[] = "открыть инвентарь?";
     if(*item_count == 10){
         printf("Ваш инвентраь заполнен, чтобы взять предмет используйте или выбросьте что-либо из инвентаря\n");
