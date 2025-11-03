@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include "init.h"
 #include "fight.h" 
 #include "saving.h"
 #include "sys_funcs.h"
@@ -8,7 +8,6 @@
 #include "text_blocks.h"
 #include "person_items.h"
 #include "dungeon_logic.h"
-#include "player_parametrs.h"
 
 
 int dungeon_generation(int* dungeon){
@@ -31,11 +30,27 @@ int dungeon_generation(int* dungeon){
 void dungeon_exploring(){
     int dungeon[7][2];
     int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1, item_count = 0;
+    Parametrs player;
+    items weapon = {"Базовый ", 0};
+    items armour[3] = {
+        {"Базовый шлем", 0},
+        {"Базовая кираса", 0},
+        {"Базовые поножи", 0}
+    };
+    items inventory[10] = {0};
 
     dungeon_generation(&dungeon[0][0]);
 
-    entering_dungeons_text();
+    clear_screen();
+    printf("Здравствуй, исследователь подземелий!\n");
+    printf("Для продолжения повествования на протяжении всей истории используй enter\n");
+    clear_input();
+    clear_screen();
+    class_pick(&player);
 
+    entering_dungeons_text(&player);
+    //open_inventory(&item_count, inventory, &weapon, armour, &player);
+    /*
     while(current_dungeon < 7){
         do{
             each_dungeon_text();
@@ -49,7 +64,7 @@ void dungeon_exploring(){
         clear_screen();
         
         if(way == 3){
-            open_inventory(&item_count);
+            open_inventory(&item_count, inventory, &weapon, armour, &player);
             clear_input();
         }
         else if(way == 4){
@@ -81,7 +96,6 @@ void dungeon_exploring(){
             clear_screen();
         }
     }
-    item_count = 0;
     temp = clear_player_parametrs();
     if(temp != 0){
         printf("ошибка очистки параметров персонажа"); 
@@ -92,4 +106,5 @@ void dungeon_exploring(){
     else{
         game_end_text(1);
     }
+    */    
 }

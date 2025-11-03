@@ -1,8 +1,9 @@
 #ifndef TEXT_BLOCKS_H
 #define TEXT_BLOCKS_H
+#include "dungeon_logic.h"
 
-void class_pick_text();
-void entering_dungeons_text();
+void class_pick_text(Parametrs *player);
+void entering_dungeons_text(Parametrs *player);
 void each_dungeon_text();
 void empty_dungeon_text();
 void treasuries_dungeon_text(char *item);

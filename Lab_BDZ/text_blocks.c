@@ -5,8 +5,8 @@
 #include "sys_funcs.h"
 
 
-void class_pick_text() {
-    printf("\nПриветствую тебя, %s!\n", player.name);
+void class_pick_text(Parametrs *player) {
+    printf("\nПриветствую тебя, %s!\n", player->name);
     printf("Судьба требует выбора. Кем ты станешь в этом мире?\n\n");
 
     printf("  1) Воин\n");
@@ -25,10 +25,10 @@ void class_pick_text() {
 }
 
 
-void entering_dungeons_text(){
+void entering_dungeons_text(Parametrs *player){
     printf("Ты проснулся в пещере, освещенной единственным факелом\n");
     clear_input();
-    switch(player.hero) {
+    switch(player->hero) {
         case 0: 
             printf("«Cудя по головной боли — это не дракон меня сюда занёс. \nЕсли бы мне сказали, что ‘последняя чаша за храбрость’ — это билет в подземелье, я бы... поднял её дважды. Обожаю приключения!»");
             break;
@@ -48,7 +48,7 @@ void entering_dungeons_text(){
     printf("На скале написано: пройди 7 испытаний и сразись с боссом, чтобы выбраться.");
     clear_input();
     printf("\n");
-    switch(player.hero){
+    switch(player->hero){
         case 0: 
             printf("«Семь испытаний? Босс?.. Звучит как расписание на неделю. Отлично — я как раз размялся, пока спал на камнях.\n");
             printf("Главное — чтобы босс был честным: без ядов, ловушек и... особенно без тавернщиц с кувшинами. Те опаснее драконов. Вперёд — за славой, шрамами и, может, завтраком!»");

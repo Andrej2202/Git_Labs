@@ -1,8 +1,8 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "init.h"
 #include "sys_funcs.h"
+#include "dungeon_logic.h"
 #include "player_parametrs.h"
 
 // для тестов
@@ -34,7 +34,7 @@ int main(){
     while(1){
         yes_no_input(&enter, text);
         if(enter == 'y' || enter == 'Y'){
-            start();
+            dungeon_exploring();
         }
         else{
             return 0;
