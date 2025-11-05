@@ -5,16 +5,21 @@
 #include "person_items.h"
 #include "text_blocks.h"
 
-int give_treasuries(int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){ 
-    treasure possible[6] = { // 0 - 2 - зашита, 3 - оружие, 4 - предметы
-        {"Ultra Pro Kiber MAX Шлем", 0, 20},
-        {"Ultra Pro Kiber MAX Кираса", 1, 50},
-        {"Ultra Pro Kiber MAX Поножи", 2, 10},
-        {"Ultra Pro Kiber MAX Меч", 3, 40},
-        {"Малая хилка", 4, 10},
-        {"Большая хилка", 4, 20}
+int give_treasuries(int *item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
+    treasure possible[6] = { // 0 - 2 - Р·Р°С€РёС‚Р°, 3 - РѕСЂСѓР¶РёРµ, 4 - РїСЂРµРґРјРµС‚С‹
+        {"Ultra Pro Kiber MAX РЁР»РµРј", 0, 20},
+        {"Ultra Pro Kiber MAX РљРёСЂР°СЃР°", 1, 50},
+        {"Ultra Pro Kiber MAX РџРѕРЅРѕР¶Рё", 2, 10},
+        {"Ultra Pro Kiber MAX РњРµС‡", 3, 40},
+        {"РњР°Р»Р°СЏ С…РёР»РєР°", 4, 10},
+        {"Р‘РѕР»СЊС€Р°СЏ С…РёР»РєР°", 4, 20}
     };
     int way = rand() % 2, item_num = rand() % 6;
+
+    if (item_count == NULL || inventory == NULL || armour == NULL || weapon == NULL || player == NULL) {
+        return 1;
+    }
+    
     if(way == 0){
         empty_dungeon_text();
     }

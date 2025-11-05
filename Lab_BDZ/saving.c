@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include "saving.h"
 #include "sys_funcs.h"
 #include "player_parametrs.h"
@@ -12,30 +11,30 @@
 
 
 int save_to_file(int dungeon, int item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
-    FILE *file = fopen("data.txt", "w"); // w - перезапись a - дозапись
+    FILE *file = fopen("data.txt", "w"); // w - РїРµСЂРµР·Р°РїРёСЃСЊ a - РґРѕР·Р°РїРёСЃСЊ
     if (file == NULL) {
-        printf("Ошибка открытия файла\n");
+        printf("РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°\n");
         clear_input();
         return -1;
     }
-    //основные параметры
+    //РѕСЃРЅРѕРІРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
     fprintf(file, "===MAIN_PARAMETRS===\n");
     fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player->hp, player->max_hp, player->strength, player->level, player->xp, dungeon, item_count);
-    //оружие
+    //РѕСЂСѓР¶РёРµ
     fprintf(file, "===WEAPON===\n");
     fprintf(file, "%s|%d\n", weapon->name, weapon->param);
-    //броня
+    //Р±СЂРѕРЅСЏ
     fprintf(file, "===ARMOUR===\n");
     for(int i = 0; i < 3; i++){
         fprintf(file, "%s|%d\n", armour[i].name, armour[i].param);
     }
-    //инвентарь
+    //РёРЅРІРµРЅС‚Р°СЂСЊ
     fprintf(file, "===INVENTORY===\n");
     for(int i = 0; i < 10; i++){
         fprintf(file, "%s|%d\n", inventory[i].name, inventory[i].param);
     }
     fprintf(file, "===END_OF_SAVE===\n");
-    printf("Сохранение прошло успешно.");
+    printf("РЎРѕС…СЂР°РЅРµРЅРёРµ РїСЂРѕС€Р»Рѕ СѓСЃРїРµС€РЅРѕ.");
     clear_input();
     fclose(file);
     return 0;
@@ -148,17 +147,10 @@ int read_armour_and_inv(char *res, int place, items *inv_armour){
 }
 
 
-int read_file(int file_num, int* cur_dungeon, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
+int read_file(int* cur_dungeon, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
     char result[64];
     int  counter = 0, armour_place = 0, inv_place = 0, error_count = 0;
-    FILE *file;
-    if(file_num == 0){
-        file = fopen("data.txt", "r");
-    }
-    else{
-        file = fopen("clear_data.txt", "r");
-    }
-
+    FILE *file = fopen("data.txt", "r");
     if (file == NULL) {
         return -1;
     }
@@ -195,10 +187,9 @@ int read_file(int file_num, int* cur_dungeon, int* item_count, items *inventory,
         }
         // printf("%s\n", result);
     }while(my_strcmp("===END_OF_SAVE===", result));
-    if(file_num == 0){
-        printf("Загрузка сохранения прошла успешно.");
-        clear_input();
-    }
+    
+    printf("Р—Р°РіСЂСѓР·РєР° СЃРѕС…СЂР°РЅРµРЅРёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ.");
+    clear_input();
     fclose(file);
     return 0;
     

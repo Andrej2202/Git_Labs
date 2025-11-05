@@ -5,7 +5,7 @@
 #include "dungeon_logic.h"
 #include "player_parametrs.h"
 
-// для тестов
+// РґР»СЏ С‚РµСЃС‚РѕРІ
 /*
 #include "person_items.h"
 #include "saving.h"
@@ -15,21 +15,21 @@ int main(){
 
     /*
     class_pick;
-    add_to_inv("Большая_хилка", 10);
+    add_to_inv("Р‘РѕР»СЊС€Р°СЏ_С…РёР»РєР°", 10);
     save_to_file(0);
     read_file();
     */
     //armour_show();
     /*
     for(int i = 0; i < 10; i++){
-        add_to_inv("Большая хилка", 10);
+        add_to_inv("Р‘РѕР»СЊС€Р°СЏ С…РёР»РєР°", 10);
     }
     open_inventory();
-    add_to_inv("Мини хилка", 10);
+    add_to_inv("РњРёРЅРё С…РёР»РєР°", 10);
     open_inventory();
     */
    
-    char enter, text[] = "начать программу";
+    char enter, text[] = "РЅР°С‡Р°С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ";
     srand(time(NULL));
     while(1){
         yes_no_input(&enter, text);

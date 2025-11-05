@@ -13,6 +13,9 @@
 
 
 int dungeon_generation(int* dungeon){
+    if(dungeon == NULL){
+        return 1;
+    }
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 2; j++) {
             *(dungeon + i * 2 + j) = j;
@@ -33,26 +36,30 @@ void dungeon_exploring(){
     int dungeon[7][2];
     int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1, item_count = 0;
     Parametrs player;
-    items weapon = {"Базовый ", 0};
+    items weapon = {"Р‘Р°Р·РѕРІС‹Р№ ", 0};
     items armour[3] = {
-        {"Базовый шлем", 0},
-        {"Базовая кираса", 0},
-        {"Базовые поножи", 0}
+        {"Р‘Р°Р·РѕРІС‹Р№ С€Р»РµРј", 0},
+        {"Р‘Р°Р·РѕРІР°СЏ РєРёСЂР°СЃР°", 0},
+        {"Р‘Р°Р·РѕРІС‹Рµ РїРѕРЅРѕР¶Рё", 0}
     };
     items inventory[10] = {0};
 
-    dungeon_generation(&dungeon[0][0]);
+    check = dungeon_generation(&dungeon[0][0]);
+    if(check != 0){
+        printf("РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РїРµС‰РµСЂ");
+    }
 
     clear_screen();
-    printf("Здравствуй, исследователь подземелий!\n");
-    printf("Для продолжения повествования на протяжении всей истории используй enter\n");
+    printf("Р—РґСЂР°РІСЃС‚РІСѓР№, РёСЃСЃР»РµРґРѕРІР°С‚РµР»СЊ РїРѕРґР·РµРјРµР»РёР№!\n");
+    printf("Р”Р»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ РїРѕРІРµСЃС‚РІРѕРІР°РЅРёСЏ РЅР° РїСЂРѕС‚СЏР¶РµРЅРёРё РІСЃРµР№ РёСЃС‚РѕСЂРёРё РёСЃРїРѕР»СЊР·СѓР№ enter\n");
     clear_input();
     clear_screen();
-    class_pick(&player);
+    check = class_pick(&player);
+    if(check != 0){
+        printf("РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РёРіСЂРѕРєР°");
+    }
 
     entering_dungeons_text(&player);
-    //open_inventory(&item_count, inventory, &weapon, armour, &player);
-
     while(current_dungeon < 7){
         do{
             each_dungeon_text();
@@ -60,7 +67,7 @@ void dungeon_exploring(){
             clear_input();
             if(way < 1 || way > 5){
                 clear_screen();
-                printf("Такого пути не существует, введите заново\n");
+                printf("РўР°РєРѕРіРѕ РїСѓС‚Рё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, РІРІРµРґРёС‚Рµ Р·Р°РЅРѕРІРѕ\n");
             }
         }while(check != 1 || (way < 1 || way > 5));
         clear_screen();
@@ -73,9 +80,9 @@ void dungeon_exploring(){
             save_to_file(current_dungeon, item_count, inventory, armour, &weapon, &player);
         }
         else if(way == 5){
-            temp = read_file(0, &current_dungeon, &item_count, inventory, armour, &weapon, &player); // убрать 0 в начале
+            temp = read_file(&current_dungeon, &item_count, inventory, armour, &weapon, &player);
             if(temp != 0){
-                printf("Ошибка загрузки сохранения.");
+                printf("РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё СЃРѕС…СЂР°РЅРµРЅРёСЏ.");
                 clear_input();
             }
         }
@@ -89,7 +96,7 @@ void dungeon_exploring(){
                     break;
                 }
             }
-            printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
+            printf("Р“РµСЂРѕР№ РїРѕРєРёРЅСѓР» РїРµС‰РµСЂСѓ Рё РїРѕС€РµР» РґР°Р»СЊС€Рµ РїРѕ РµРґРёРЅСЃС‚РІРµРЅРЅРѕРјСѓ С‚СѓРЅРЅРµР»СЋ\n");
             clear_input();
             current_dungeon++;
         }
@@ -99,11 +106,14 @@ void dungeon_exploring(){
         }
     }
     /*
-    temp = clear_player_parametrs(); очистка файла сохранения
+    temp = clear_player_parametrs(); РѕС‡РёСЃС‚РєР° С„Р°Р№Р»Р° СЃРѕС…СЂР°РЅРµРЅРёСЏ
     if(temp != 0){
-        printf("ошибка очистки параметров персонажа"); 
+        printf("РѕС€РёР±РєР° РѕС‡РёСЃС‚РєРё РїР°СЂР°РјРµС‚СЂРѕРІ РїРµСЂСЃРѕРЅР°Р¶Р°"); 
     }
     */ 
+    if(remove("data.txt") != 0){
+        printf("РћС€РёР±РєР° СѓРґР°Р»РµРЅРёСЏ С„Р°Р№Р»Р°");
+    }
     if(fight_result == 0){
         game_end_text(0);
     }

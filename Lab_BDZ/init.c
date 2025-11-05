@@ -6,11 +6,14 @@
 #include "player_parametrs.h"
 
 
-void class_pick(Parametrs *player){
+int class_pick(Parametrs *player){
     int check = 0;
     char s = ' ';
+    if(player == NULL){
+        return 1;
+    }
     do{
-        printf("Ââåäè èìÿ èãğîêà:\n");
+        printf("Ğ’Ğ²ĞµĞ´Ğ¸ Ğ¸Ğ¼Ñ Ğ¸Ğ³Ñ€Ğ¾ĞºĞ°:\n");
         fgets(player->name, sizeof(player->name), stdin);
         for (int i = 0; player->name[i] != '\0'; i++){
             if (player->name[i] == '\n'){
@@ -18,7 +21,7 @@ void class_pick(Parametrs *player){
                 break;
             }
         }
-        printf("%s, âåğíî?(y/n)\n", player->name);
+        printf("%s, Ğ²ĞµÑ€Ğ½Ğ¾?(y/n)\n", player->name);
         scanf(" %c", &s);
         clear_input();
         clear_screen();
@@ -55,4 +58,5 @@ void class_pick(Parametrs *player){
     player->xp = 0;
     player->addit_strength = 0;
     clear_screen();
+    return 0;
 }

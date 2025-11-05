@@ -14,33 +14,33 @@ int fight(int lvl, int* item_count, int* fight_result, items *inventory, items *
 
     while(player->hp > 0 ){
         clear_screen();
-        printf("Твое хп: %d/%d, хп моба %d/%d\n\n", player->hp, player->max_hp, mob_health, mob_maxHealth);
+        printf("РўРІРѕРµ С…Рї: %d/%d, С…Рї РјРѕР±Р° %d/%d\n\n", player->hp, player->max_hp, mob_health, mob_maxHealth);
         cube = rand() % 6  + 1;
         mob_health -= cube;
-        printf("Ты ударил скелета и он потерял %dхп\n", cube);
+        printf("РўС‹ СѓРґР°СЂРёР» СЃРєРµР»РµС‚Р° Рё РѕРЅ РїРѕС‚РµСЂСЏР» %dС…Рї\n", cube);
         clear_input();
 
         if(mob_health <= 0){
-            printf("Скелет рассыпался в пыль\n\n");
+            printf("РЎРєРµР»РµС‚ СЂР°СЃСЃС‹РїР°Р»СЃСЏ РІ РїС‹Р»СЊ\n\n");
             int temp_lvl = player->level, temp_hp = player->max_hp, temp_strenght = player->strength;
             change_player_param("xp", lvl * 5, player);
-            printf("Герой получил %d xp за победу\n", lvl * 5);
+            printf("Р“РµСЂРѕР№ РїРѕР»СѓС‡РёР» %d xp Р·Р° РїРѕР±РµРґСѓ\n", lvl * 5);
             if(temp_lvl != player->level){
                 int count_heals = player->level - temp_lvl;
-                printf("Уровень персонажа повышен %d -> %d\n", temp_lvl, player->level);
-                printf("Герой получил %d больших хилок\n", count_heals);
+                printf("РЈСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕРІС‹С€РµРЅ %d -> %d\n", temp_lvl, player->level);
+                printf("Р“РµСЂРѕР№ РїРѕР»СѓС‡РёР» %d Р±РѕР»СЊС€РёС… С…РёР»РѕРє\n", count_heals);
                 for(int i = 0; i < count_heals; i++){
-                    add_to_inv("Большая хилка", 20, item_count, inventory, armour, weapon, player);
+                    add_to_inv("Р‘РѕР»СЊС€Р°СЏ С…РёР»РєР°", 20, item_count, inventory, armour, weapon, player);
                 }
-                printf("Улучшенные характеристики персонажа: максимальное хп - %d -> %d, базовая сила %d -> %d\n", temp_hp, player->max_hp, temp_strenght, player->strength);
+                printf("РЈР»СѓС‡С€РµРЅРЅС‹Рµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р°: РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ С…Рї - %d -> %d, Р±Р°Р·РѕРІР°СЏ СЃРёР»Р° %d -> %d\n", temp_hp, player->max_hp, temp_strenght, player->strength);
             }
             clear_input();
             *fight_result = 1;
             return 0;
         }
 
-        printf("Скелет сделал выпад и ловким ударом поранил тебя.\n");
-        printf("Ты потерял %dхп\n", cube);
+        printf("РЎРєРµР»РµС‚ СЃРґРµР»Р°Р» РІС‹РїР°Рґ Рё Р»РѕРІРєРёРј СѓРґР°СЂРѕРј РїРѕСЂР°РЅРёР» С‚РµР±СЏ.\n");
+        printf("РўС‹ РїРѕС‚РµСЂСЏР» %dС…Рї\n", cube);
         change_player_param("hp", -1 * cube, player);
         clear_input();
     }

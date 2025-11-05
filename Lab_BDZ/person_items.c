@@ -3,17 +3,17 @@
 #include "dungeon_logic.h"
 #include "player_parametrs.h"
 
-//логика оружия ------------------------------------------------------------------------------------------------
+//Р»РѕРіРёРєР° РѕСЂСѓР¶РёСЏ ------------------------------------------------------------------------------------------------
 void weapon_show(items *weapon){
-    printf("Текущее оружие: \n%s, урон: %d\n\n", weapon->name, weapon->param);
+    printf("РўРµРєСѓС‰РµРµ РѕСЂСѓР¶РёРµ: \n%s, СѓСЂРѕРЅ: %d\n\n", weapon->name, weapon->param);
 }
 
 
 void weapon_replace(const char *name, int param, items *weapon){
-    char enter, text[] = "заменить";
+    char enter, text[] = "Р·Р°РјРµРЅРёС‚СЊ";
     if(weapon->param != -1){
-        printf("Оружие уже есть.\n");
-        printf("%s -> %s \nИзменение характеристик при замене: %d -> %d\n", weapon->name, name, weapon->param, param);
+        printf("РћСЂСѓР¶РёРµ СѓР¶Рµ РµСЃС‚СЊ.\n");
+        printf("%s -> %s \nРР·РјРµРЅРµРЅРёРµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РїСЂРё Р·Р°РјРµРЅРµ: %d -> %d\n", weapon->name, name, weapon->param, param);
         yes_no_input(&enter, text);
         if(enter == 'y'|| enter == 'Y'){
             weapon->param = -1;
@@ -26,31 +26,31 @@ void weapon_replace(const char *name, int param, items *weapon){
 }
 
 
-//логика брони ------------------------------------------------------------------------------------------------
+//Р»РѕРіРёРєР° Р±СЂРѕРЅРё ------------------------------------------------------------------------------------------------
 void armour_show(items* armour){
-    printf("Броня:\n");
+    printf("Р‘СЂРѕРЅСЏ:\n");
     for(int i = 0; i < 3; i++){
         switch(i){
             case 0:
-                printf("Голова:   ");
+                printf("Р“РѕР»РѕРІР°:   ");
                 break;
             case 1:
-                printf("Туловище: ");
+                printf("РўСѓР»РѕРІРёС‰Рµ: ");
                 break;
             default:
-                printf("Ноги:     ");
+                printf("РќРѕРіРё:     ");
         }
-        printf("%s:  защита - %d\n", armour[i].name, armour[i].param);
+        printf("%s:  Р·Р°С‰РёС‚Р° - %d\n", armour[i].name, armour[i].param);
     }
     printf("\n");
 }
 
 
 void armour_replace(int place, const char *name, int param, items *armour){
-    char enter, text[] = "заменить";
+    char enter, text[] = "Р·Р°РјРµРЅРёС‚СЊ";
     if(armour[place].param != 0){
-        printf("Данный слот брони уже занят. Хотите заменить?\n");
-        printf("%s -> %s \nИзменение характеристик при замене: %d -> %d\n", armour[place].name, name, armour[place].param, param);
+        printf("Р”Р°РЅРЅС‹Р№ СЃР»РѕС‚ Р±СЂРѕРЅРё СѓР¶Рµ Р·Р°РЅСЏС‚. РҐРѕС‚РёС‚Рµ Р·Р°РјРµРЅРёС‚СЊ?\n");
+        printf("%s -> %s \nРР·РјРµРЅРµРЅРёРµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РїСЂРё Р·Р°РјРµРЅРµ: %d -> %d\n", armour[place].name, name, armour[place].param, param);
         yes_no_input(&enter, text);
         if(enter =='y' || enter == 'Y'){
             armour[place].param = -1;
@@ -64,20 +64,20 @@ void armour_replace(int place, const char *name, int param, items *armour){
 
 
 
-//логика инвентаря ------------------------------------------------------------------------------------------------
+//Р»РѕРіРёРєР° РёРЅРІРµРЅС‚Р°СЂСЏ ------------------------------------------------------------------------------------------------
 
 
 int using_item(int num, int* item_count, Parametrs *player, items *inventory){
     int temp = player->hp;
     num--;
     if(num < 0 || num >= *item_count){
-        printf("Эта ячейка инвентаря пуста\n");
+        printf("Р­С‚Р° СЏС‡РµР№РєР° РёРЅРІРµРЅС‚Р°СЂСЏ РїСѓСЃС‚Р°\n");
         clear_input();
         clear_input();
         return 1;
     }
     change_player_param("hp", inventory[num].param, player); //
-    printf("Персонаж выпил зелье\nХп восстановилось %d->%d\n", temp, player->hp);
+    printf("РџРµСЂСЃРѕРЅР°Р¶ РІС‹РїРёР» Р·РµР»СЊРµ\nРҐРї РІРѕСЃСЃС‚Р°РЅРѕРІРёР»РѕСЃСЊ %d->%d\n", temp, player->hp);
     inventory[num] = inventory[*item_count - 1];
     (*item_count)--;
     return 0;
@@ -88,7 +88,7 @@ int using_item(int num, int* item_count, Parametrs *player, items *inventory){
 int delete_item(int num, int* item_count, items *inventory){
     num--;
     if(num < 0 || num >= *item_count){
-        printf("Эта ячейка инвентаря пуста\n");
+        printf("Р­С‚Р° СЏС‡РµР№РєР° РёРЅРІРµРЅС‚Р°СЂСЏ РїСѓСЃС‚Р°\n");
         clear_input();
         clear_input();
         return 1;
@@ -105,20 +105,20 @@ void open_inventory(int* item_count, items *inventory, items *armour, items *wea
         armour_show(armour);
         weapon_show(weapon);
         if(*item_count == 0){
-            printf("Ваш инвентарь пуст");
+            printf("Р’Р°С€ РёРЅРІРµРЅС‚Р°СЂСЊ РїСѓСЃС‚");
             clear_input();
             fl = 1;
         }
         else{
             for(int i = 0; i < *item_count; i++){
-                printf("%d. %s - увеличивает хп на %d единиц.\n", i + 1, inventory[i].name, inventory[i].param);
+                printf("%d. %s - СѓРІРµР»РёС‡РёРІР°РµС‚ С…Рї РЅР° %d РµРґРёРЅРёС†.\n", i + 1, inventory[i].name, inventory[i].param);
             }
-            printf("\nИспользовать предмета из инвентаря - 1, удалить предмет - 2, выйти из инвентаря - 3\n");
+            printf("\nРСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚Р° РёР· РёРЅРІРµРЅС‚Р°СЂСЏ - 1, СѓРґР°Р»РёС‚СЊ РїСЂРµРґРјРµС‚ - 2, РІС‹Р№С‚Рё РёР· РёРЅРІРµРЅС‚Р°СЂСЏ - 3\n");
             scanf("%d", &command);
             if(command == 1){
                 int num, check;
                 do{
-                    printf("Какой номер хочешь использовать?:");
+                    printf("РљР°РєРѕР№ РЅРѕРјРµСЂ С…РѕС‡РµС€СЊ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ?:");
                     scanf("%d", &num);
                     check = using_item(num, item_count, player, inventory);
                 }while(check != 0 && *item_count != 0);
@@ -126,7 +126,7 @@ void open_inventory(int* item_count, items *inventory, items *armour, items *wea
             else if(command == 2){
                 int num, check;
                 do{
-                    printf("Какой номер хочешь убрать из инвентаря?:");
+                    printf("РљР°РєРѕР№ РЅРѕРјРµСЂ С…РѕС‡РµС€СЊ СѓР±СЂР°С‚СЊ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ?:");
                     scanf("%d", &num);
                     check = delete_item(num, item_count, inventory);
                 }while(check != 0 && *item_count != 0);
@@ -142,9 +142,9 @@ void open_inventory(int* item_count, items *inventory, items *armour, items *wea
 
 
 void add_to_inv(const char *name, int param_ammount, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
-    char temp = 'n', text[] = "открыть инвентарь?";
+    char temp = 'n', text[] = "РѕС‚РєСЂС‹С‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ?";
     if(*item_count == 10){
-        printf("Ваш инвентраь заполнен, чтобы взять предмет используйте или выбросьте что-либо из инвентаря\n");
+        printf("Р’Р°С€ РёРЅРІРµРЅС‚СЂР°СЊ Р·Р°РїРѕР»РЅРµРЅ, С‡С‚РѕР±С‹ РІР·СЏС‚СЊ РїСЂРµРґРјРµС‚ РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РёР»Рё РІС‹Р±СЂРѕСЃСЊС‚Рµ С‡С‚Рѕ-Р»РёР±Рѕ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ\n");
         yes_no_input(&temp, text);
         if(temp == 'y' || temp == 'Y'){
             open_inventory(item_count, inventory, weapon, armour, player);
