@@ -2,14 +2,14 @@
 #define DUNGEON_LOGIC_H
 typedef struct {
     char name[128];
-    int hero, hp, max_hp, strength, level, xp, addit_strength;
+    int hero, hp, max_hp, strength, level, xp;
     
 } Parametrs; 
 
 typedef struct{
-    char name[30];
+    char name[34];
     int param;
 } items;
 
-void dungeon_exploring();
+int dungeon_exploring();
 #endif

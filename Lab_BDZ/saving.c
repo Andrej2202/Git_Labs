@@ -15,7 +15,11 @@ int save_to_file(int dungeon, int item_count, items *inventory, items *armour, i
     if (file == NULL) {
         printf("Ошибка открытия файла\n");
         clear_input();
-        return -1;
+        return 1;
+    }
+    if(inventory == NULL || armour == NULL || weapon == NULL || player == NULL){
+        printf("Ошибка передачи параметров в save_to_file");
+        return 1;
     }
     //основные параметры
     fprintf(file, "===MAIN_PARAMETRS===\n");
@@ -152,7 +156,12 @@ int read_file(int* cur_dungeon, int* item_count, items *inventory, items *armour
     int  counter = 0, armour_place = 0, inv_place = 0, error_count = 0;
     FILE *file = fopen("data.txt", "r");
     if (file == NULL) {
-        return -1;
+        printf("Ошибка открытия файла в read_file");
+        return 1;
+    }
+    if(inventory == NULL || armour == NULL || weapon == NULL || player == NULL){
+        printf("Ошибка передачи параметров в read_file");
+        return 1;
     }
     do{
         fgets(result, sizeof(result), file);
@@ -178,14 +187,13 @@ int read_file(int* cur_dungeon, int* item_count, items *inventory, items *armour
                 inv_place++;
                 break;
             default:
-                printf("Error: you're out from save");
+                printf("Выход за границу сейва");
                 return 1;
         }
         if(error_count != 0){
-            printf("Error in switch");
+            printf("Ошибка внутри switch в read_file");
             return 1;
         }
-        // printf("%s\n", result);
     }while(my_strcmp("===END_OF_SAVE===", result));
     
     printf("Загрузка сохранения прошла успешно.");

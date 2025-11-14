@@ -2,7 +2,7 @@
 #define TREASURIES_H
 #include "dungeon_logic.h"
 typedef struct {
-    char name[27];
+    char name[35];
     int  class, param;
     
 } treasure;

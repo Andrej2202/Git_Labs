@@ -11,9 +11,9 @@
 #include "player_parametrs.h"
 
 
-
 int dungeon_generation(int* dungeon){
     if(dungeon == NULL){
+        printf("Ошибка получения dungeon в dungeon_generation");
         return 1;
     }
     for (int i = 0; i < 7; i++) {
@@ -32,21 +32,21 @@ int dungeon_generation(int* dungeon){
 }
 
 
-void dungeon_exploring(){
+int dungeon_exploring(){
     int dungeon[7][2];
-    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, temp = -1, item_count = 0;
+    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, item_count = 0, saving_fl = 0;
     Parametrs player;
-    items weapon = {"Базовый ", 0};
+    items weapon = {"Базовый меч", 0};
     items armour[3] = {
-        {"Базовый шлем", 0},
-        {"Базовая кираса", 0},
-        {"Базовые поножи", 0}
+        {"Шапка петушок", 0},
+        {"Майка алкоголичка", 0},
+        {"Штаны 40 гривен", 0}
     };
     items inventory[10] = {0};
 
     check = dungeon_generation(&dungeon[0][0]);
     if(check != 0){
-        printf("Ошибка создания пещер");
+        return 1;
     }
 
     clear_screen();
@@ -56,7 +56,7 @@ void dungeon_exploring(){
     clear_screen();
     check = class_pick(&player);
     if(check != 0){
-        printf("Ошибка создания игрока");
+        return 1;
     }
 
     entering_dungeons_text(&player);
@@ -73,25 +73,44 @@ void dungeon_exploring(){
         clear_screen();
         
         if(way == 3){
-            open_inventory(&item_count, inventory, armour, &weapon, &player);
+            check = open_inventory(&item_count, inventory, armour, &weapon, &player); 
+            if(check != 0){
+                return 1;
+            }
             clear_input();
         }
         else if(way == 4){
-            save_to_file(current_dungeon, item_count, inventory, armour, &weapon, &player);
+            saving_fl = 1;
+            check = save_to_file(current_dungeon, item_count, inventory, armour, &weapon, &player);
+            if(check != 0){
+                return 1;
+            }
         }
         else if(way == 5){
-            temp = read_file(&current_dungeon, &item_count, inventory, armour, &weapon, &player);
-            if(temp != 0){
-                printf("Ошибка загрузки сохранения.");
+            if(saving_fl == 1){
+                check = read_file(&current_dungeon, &item_count, inventory, armour, &weapon, &player);
+                if(check != 0){
+                    return 1;
+                }
+            }
+            else{
+                printf("Вы еще не сохранялись");
                 clear_input();
             }
+            
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
-                give_treasuries(&item_count, inventory, armour, &weapon, &player);
+                check = give_treasuries(&item_count, inventory, armour, &weapon, &player);
+                if(check != 0){
+                    return 1;
+                }
             }
             else{
-                fight(current_dungeon, &item_count, &fight_result, inventory, armour, &weapon, &player);
+                check = fight(current_dungeon, &item_count, &fight_result, inventory, armour, &weapon, &player);
+                if(check != 0){
+                    return 1;
+                }
                 if(fight_result == 0){
                     break;
                 }
@@ -105,13 +124,8 @@ void dungeon_exploring(){
             clear_screen();
         }
     }
-    /*
-    temp = clear_player_parametrs(); очистка файла сохранения
-    if(temp != 0){
-        printf("ошибка очистки параметров персонажа"); 
-    }
-    */ 
-    if(remove("data.txt") != 0){
+    
+    if(saving_fl == 1 && remove("data.txt") != 0){
         printf("Ошибка удаления файла");
     }
     if(fight_result == 0){
@@ -120,4 +134,5 @@ void dungeon_exploring(){
     else{
         game_end_text(1);
     } 
+    return 0;
 }

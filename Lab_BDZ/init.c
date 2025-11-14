@@ -10,6 +10,7 @@ int class_pick(Parametrs *player){
     int check = 0;
     char s = ' ';
     if(player == NULL){
+        printf("Ошибка получения player в class_pick");
         return 1;
     }
     do{
@@ -56,7 +57,6 @@ int class_pick(Parametrs *player){
     player->max_hp = player->hp;
     player->level = 1;
     player->xp = 0;
-    player->addit_strength = 0;
     clear_screen();
     return 0;
 }

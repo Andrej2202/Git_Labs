@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include "sys_funcs.h"
-#include "saving.h"
-#include "dungeon_logic.h"
 #include "player_parametrs.h"
 
 
 
 
 int change_player_param(char *change, int n, Parametrs *player){
+    if(player == NULL){
+        printf("Ошибка передачи данных в change_player_parametrs");
+        return 1;
+    }
     if(my_strcmp(change, "hp") == 0){
         player->hp = ((player->hp + n) < (player->max_hp) ? (player->hp + n) : (player->max_hp)); 
     }
@@ -16,9 +18,6 @@ int change_player_param(char *change, int n, Parametrs *player){
     }
     if(my_strcmp(change, "strength") == 0){
         player->strength += n;
-    }
-    if(my_strcmp(change, "addit_strength") == 0){
-        player->addit_strength += n;
     }
     if(my_strcmp(change, "xp") == 0){
         while(player->xp + n >= player->level * 10){
