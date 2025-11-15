@@ -10,7 +10,7 @@
      my_strcmp("===END_OF_SAVE===", (s)) == 0)
 
 
-int save_to_file(int dungeon, int item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
+int save_to_file(int dungeon, items *inventory, items *armour, items *weapon, Parametrs *player){
     FILE *file = fopen("data.txt", "w"); // w - перезапись a - дозапись
     if (file == NULL) {
         printf("Ошибка открытия файла\n");
@@ -23,7 +23,7 @@ int save_to_file(int dungeon, int item_count, items *inventory, items *armour, i
     }
     //основные параметры
     fprintf(file, "===MAIN_PARAMETRS===\n");
-    fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player->hp, player->max_hp, player->strength, player->level, player->xp, dungeon, item_count);
+    fprintf(file, "%d|%d|%d|%d|%d|%d|%d\n", player->hp, player->max_hp, player->strength, player->level, player->xp, dungeon, player->item_count);
     //оружие
     fprintf(file, "===WEAPON===\n");
     fprintf(file, "%s|%d\n", weapon->name, weapon->param);
@@ -45,7 +45,7 @@ int save_to_file(int dungeon, int item_count, items *inventory, items *armour, i
 }
 
 
-int read_mainParam(char *res, int* cur_dungeon, int* item_count, Parametrs *player){
+int read_mainParam(char *res, int* cur_dungeon, Parametrs *player){
     int hp = 0, max_hp = 0, strength = 0, level = 0, xp = 0, dungeon = 0, item_c = 0,  fl = 0;
     if(res == NULL) return 1;
 
@@ -92,7 +92,7 @@ int read_mainParam(char *res, int* cur_dungeon, int* item_count, Parametrs *play
     player->max_hp = max_hp;
     player->strength = strength;
     player->level = level;
-    *item_count = item_c;
+    player->item_count = item_c;
     *cur_dungeon = dungeon;
     return 0;
 }
@@ -151,7 +151,7 @@ int read_armour_and_inv(char *res, int place, items *inv_armour){
 }
 
 
-int read_file(int* cur_dungeon, int* item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
+int read_file(int* cur_dungeon, items *inventory, items *armour, items *weapon, Parametrs *player){
     char result[64];
     int  counter = 0, armour_place = 0, inv_place = 0, error_count = 0;
     FILE *file = fopen("data.txt", "r");
@@ -173,7 +173,7 @@ int read_file(int* cur_dungeon, int* item_count, items *inventory, items *armour
         }
         switch(counter){
             case 1:
-                error_count += read_mainParam(result, cur_dungeon, item_count, player);
+                error_count += read_mainParam(result, cur_dungeon, player);
                 break;
             case 2:
                 error_count += read_weapon(result, weapon);

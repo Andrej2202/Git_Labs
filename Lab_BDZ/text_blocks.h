@@ -4,7 +4,7 @@
 
 void class_pick_text(Parametrs *player);
 void entering_dungeons_text(Parametrs *player);
-void each_dungeon_text();
+void each_dungeon_text(int current_dungeon);
 void empty_dungeon_text();
 void treasuries_dungeon_text(char *item);
 void mob_dungeon_text();

@@ -2,7 +2,7 @@
 #define DUNGEON_LOGIC_H
 typedef struct {
     char name[128];
-    int hero, hp, max_hp, strength, level, xp;
+    int hero, hp, max_hp, strength, level, xp, item_count, max_items;
     
 } Parametrs; 
 

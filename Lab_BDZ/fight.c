@@ -7,22 +7,24 @@
 #include "player_parametrs.h"
 
 
-int fight(int lvl, int* item_count, int* fight_result, items *inventory, items *armour, items *weapon, Parametrs *player){ 
+int fight(int lvl, items *inventory, items *armour, items *weapon, Parametrs *player){ 
     mob_dungeon_text();
-    int cube = 0, mob_maxHealth = lvl * 10, mob_health = lvl * 10, check = 0, player_strike = 0, mob_strike = 0;
+    int rand_buff = rand() % 50 + 30;
+    int cube = 0, mob_maxHealth = lvl * 10 + rand_buff, mob_health = lvl * 10 + rand_buff, check = 0, player_strike = 0, mob_strike = 0, player_armour = 0;
     clear_input();
     if(inventory == NULL || armour == NULL || weapon == NULL || player == NULL){
         printf("Ошибка передачи параметров в fight");
         return 1;
     }
-
+    
+    player_armour = armour[0].param + armour[1].param + armour[2].param;
     while(player->hp > 0 ){
         clear_screen();
         printf("Твое хп: %d/%d, хп моба %d/%d\n\n", player->hp, player->max_hp, mob_health, mob_maxHealth);
         cube = rand() % 6  + 1;
-        player_strike = player->strength * cube;
-        mob_health -= player_strike;
+        player_strike = player->strength * cube + weapon->param;
         printf("Ты ударил скелета и он потерял %dхп\n", (player_strike < mob_health) ? player_strike : mob_health);
+        mob_health -= player_strike;
         clear_input();
 
         if(mob_health <= 0){
@@ -38,7 +40,7 @@ int fight(int lvl, int* item_count, int* fight_result, items *inventory, items *
                 printf("Уровень персонажа повышен %d -> %d\n", temp_lvl, player->level);
                 printf("Герой получил %d больших хилок\n", count_heals);
                 for(int i = 0; i < count_heals; i++){
-                    check = add_to_inv("Большая хилка", 20, item_count, inventory, armour, weapon, player);
+                    check = add_to_inv("Большая хилка", 20, inventory, armour, weapon, player);
                     if(check != 0){
                         return 1;
                     }
@@ -46,18 +48,24 @@ int fight(int lvl, int* item_count, int* fight_result, items *inventory, items *
                 printf("Улучшенные характеристики персонажа: максимальное хп - %d -> %d, базовая сила %d -> %d\n", temp_hp, player->max_hp, temp_strenght, player->strength);
             }
             clear_input();
-            *fight_result = 1;
             return 0;
         }
 
-        printf("Скелет сделал выпад и ловким ударом поранил тебя.\n");
-        printf("Ты потерял %dхп\n", cube);
-        check = change_player_param("hp", -1 * cube, player);
+        printf("Скелет сделал выпад");
+        mob_strike = cube * 3 * lvl - player_armour;
+        mob_strike = (mob_strike > 0) ? (mob_strike) : 0;
+        mob_strike = (mob_strike < player->hp) ? (mob_strike) : (player->hp);
+        if(mob_strike == 0){
+            printf(", меч с лязгом прошел по броне, но не нанес урон.");
+        }
+        else{
+            printf(" и ловким ударом поранил тебя.\nТы потерял %dхп\n", mob_strike);
+            check = change_player_param("hp", -1 * mob_strike, player);
+        }
         if(check != 0){
             return 1;
         }
         clear_input();
     }
-    *fight_result = 0;
     return 0;
 }

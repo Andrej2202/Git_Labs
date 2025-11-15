@@ -37,18 +37,21 @@ int class_pick(Parametrs *player){
     player->hero -= 1;
     switch(player->hero) {
         case 0:
-            player->hp = 45000; 
-            player->strength = 25;
+            player->hp = 200; 
+            player->strength = 5;
+            player->max_items = 3;
             break;
 
         case 1:
-            player->hp = 150000; 
-            player->strength = 50;
+            player->hp = 100; 
+            player->strength = 10;
+            player->max_items = 5;
             break;
 
         case 2:
-            player->hp = 400000; 
-            player->strength = 20;
+            player->hp = 150; 
+            player->strength = 8;
+            player->max_items = 4;
             break;
         default:
             player->hp = 400000; 
@@ -57,6 +60,7 @@ int class_pick(Parametrs *player){
     player->max_hp = player->hp;
     player->level = 1;
     player->xp = 0;
+    player->item_count = 0;
     clear_screen();
     return 0;
 }

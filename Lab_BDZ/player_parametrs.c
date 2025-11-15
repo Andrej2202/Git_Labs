@@ -24,7 +24,7 @@ int change_player_param(char *change, int n, Parametrs *player){
             n -= (player->level * 10 - player->xp);
             player->level++;
             player->max_hp += player->max_hp / 10;
-            player->strength += player->strength / 10;
+            player->strength += player->strength / 2;
             player->xp = 0; 
         }
         player->xp += n;

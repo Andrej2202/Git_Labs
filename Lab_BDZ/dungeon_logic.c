@@ -34,9 +34,9 @@ int dungeon_generation(int* dungeon){
 
 int dungeon_exploring(){
     int dungeon[7][2];
-    int current_dungeon = 1, way = 0, check = 0, fight_result = 0, item_count = 0, saving_fl = 0;
+    int current_dungeon = 1, way = 0, check = 0, saving_fl = 0;
     Parametrs player;
-    items weapon = {"Базовый меч", 0};
+    items weapon = {"кулачки", 0};
     items armour[3] = {
         {"Шапка петушок", 0},
         {"Майка алкоголичка", 0},
@@ -60,9 +60,9 @@ int dungeon_exploring(){
     }
 
     entering_dungeons_text(&player);
-    while(current_dungeon < 7){
+    while(current_dungeon < 8){
         do{
-            each_dungeon_text();
+            each_dungeon_text(current_dungeon);
             check = scanf("%d", &way);            
             clear_input();
             if(way < 1 || way > 5){
@@ -73,7 +73,7 @@ int dungeon_exploring(){
         clear_screen();
         
         if(way == 3){
-            check = open_inventory(&item_count, inventory, armour, &weapon, &player); 
+            check = open_inventory(inventory, armour, &weapon, &player); 
             if(check != 0){
                 return 1;
             }
@@ -81,14 +81,14 @@ int dungeon_exploring(){
         }
         else if(way == 4){
             saving_fl = 1;
-            check = save_to_file(current_dungeon, item_count, inventory, armour, &weapon, &player);
+            check = save_to_file(current_dungeon, inventory, armour, &weapon, &player);
             if(check != 0){
                 return 1;
             }
         }
         else if(way == 5){
             if(saving_fl == 1){
-                check = read_file(&current_dungeon, &item_count, inventory, armour, &weapon, &player);
+                check = read_file(&current_dungeon, inventory, armour, &weapon, &player);
                 if(check != 0){
                     return 1;
                 }
@@ -101,17 +101,17 @@ int dungeon_exploring(){
         }
         else{
             if(dungeon[current_dungeon][way - 1] == 0){
-                check = give_treasuries(&item_count, inventory, armour, &weapon, &player);
+                check = give_treasuries(current_dungeon, inventory, armour, &weapon, &player);
                 if(check != 0){
                     return 1;
                 }
             }
             else{
-                check = fight(current_dungeon, &item_count, &fight_result, inventory, armour, &weapon, &player);
+                check = fight(current_dungeon, inventory, armour, &weapon, &player);
                 if(check != 0){
                     return 1;
                 }
-                if(fight_result == 0){
+                if(player.hp <= 0){
                     break;
                 }
             }
@@ -120,7 +120,7 @@ int dungeon_exploring(){
             current_dungeon++;
         }
 
-        if(current_dungeon != 7){
+        if(current_dungeon != 8){
             clear_screen();
         }
     }
@@ -128,7 +128,7 @@ int dungeon_exploring(){
     if(saving_fl == 1 && remove("data.txt") != 0){
         printf("Ошибка удаления файла");
     }
-    if(fight_result == 0){
+    if(player.hp == 0){
         game_end_text(0);
     }
     else{

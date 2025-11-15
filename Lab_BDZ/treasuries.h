@@ -7,5 +7,5 @@ typedef struct {
     
 } treasure;
 
-int give_treasuries(int *item_count, items *inventory, items *armour, items *weapon, Parametrs *player);
+int give_treasuries(int cur_dungeon, items *inventory, items *armour, items *weapon, Parametrs *player);
 #endif

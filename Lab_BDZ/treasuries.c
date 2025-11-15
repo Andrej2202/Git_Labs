@@ -5,18 +5,30 @@
 #include "person_items.h"
 #include "text_blocks.h"
 
-int give_treasuries(int *item_count, items *inventory, items *armour, items *weapon, Parametrs *player){
-    treasure possible[6] = { // 0 - 2 - зашита, 3 - оружие, 4 - предметы
-        {"Ultra Pro Kiber MAX Шлем", 0, 20},
-        {"Ultra Pro Kiber MAX Кираса", 1, 50},
-        {"Ultra Pro Kiber MAX Поножи", 2, 10},
-        {"Ultra Pro Kiber MAX Меч", 3, 40},
+int give_treasuries(int cur_dungeon, items *inventory, items *armour, items *weapon, Parametrs *player){
+    treasure possible[15] = { // 0 - 2 - зашита, 3 - оружие, 4 - предметы
+        {"Медный шлем", 0, 20},
+        {"Медный кираса", 1, 50},
+        {"Медный поножи", 2, 10},
+        {"Медный", 3, 10}, // меч, лук, бульбулятор
         {"Малая хилка", 4, 10},
+
+        {"Стальной Шлем", 0, 20},
+        {"Стальной Кираса", 1, 50},
+        {"Стальной Поножи", 2, 10},
+        {"Стальной", 3, 10},
+        {"Большая хилка", 4, 20},
+
+        {"Изумрудный шлем", 0, 20},
+        {"Изумрудная кираса", 1, 50},
+        {"изумрудные поножи", 2, 10},
+        {"Изумрудный", 3, 10},
         {"Большая хилка", 4, 20}
     };
-    int way = rand() % 2, item_num = rand() % 6, check;
+    cur_dungeon--;
+    int way = rand() % 2, item_num = rand() % 5 + 5 * (cur_dungeon / 3), check;
 
-    if (item_count == NULL || inventory == NULL || armour == NULL || weapon == NULL || player == NULL) {
+    if (inventory == NULL || armour == NULL || weapon == NULL || player == NULL) {
         printf("Ошибка получения параметров в give_treasuries");
         return 1;
     }
@@ -30,10 +42,10 @@ int give_treasuries(int *item_count, items *inventory, items *armour, items *wea
             check = armour_replace(possible[item_num].class, possible[item_num].name, possible[item_num].param, armour);
         }
         else if(possible[item_num].class == 3){
-            check = weapon_replace(possible[item_num].name, possible[item_num].param, weapon);
+            check = weapon_replace(possible[item_num].name, possible[item_num].param, weapon, &player->hero);
         }
         else{
-            check = add_to_inv(possible[item_num].name, possible[item_num].param, item_count, inventory, armour, weapon, player);
+            check = add_to_inv(possible[item_num].name, possible[item_num].param, inventory, armour, weapon, player);
         }
     }
     return check;
