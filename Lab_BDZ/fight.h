@@ -4,4 +4,5 @@
 
 int fight(int lvl, items *inventory, items *armour, items *weapon, Parametrs *player); 
 
+int boss_fight(int lvl, items *inventory, items *armour, items *weapon, Parametrs *player);
 #endif

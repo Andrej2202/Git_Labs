@@ -40,10 +40,10 @@ int weapon_replace(const char *name, int param, items *weapon, int* class){
         printf("Ошибка передачи в weapon_replace");
         return 1;
     }
-    if(weapon->param != -1){
+    if(weapon->param != -1){ // туууут траааблы
         printf("Оружие уже есть.\n");
         if(my_strcmp(weapon->name, "кулачки") == 0){
-            printf("%s -> %s \nИзменение характеристик при замене: %d -> %d\n", weapon->name, name, weapon->param, param);
+            printf("%s", weapon->name);
         }
         else{
             printf("%s", weapon->name);
@@ -62,8 +62,25 @@ int weapon_replace(const char *name, int param, items *weapon, int* class){
                     break;
 
             }
-            printf("-> %s \nИзменение характеристик при замене: %d -> %d\n", name, weapon->param, param);
         }
+
+        printf("-> %s ", name);
+        switch(*class){
+            case 0:
+                printf(" меч");
+                break;
+            case 1:
+                printf(" лук");
+                break;
+            case 2:
+                printf(" бульбулятор");
+                break;
+            default:
+                printf(" кусь");
+                break;
+
+        }
+        printf("\nИзменение характеристик при замене: %d -> %d\n", weapon->param, param);
         yes_no_input(&enter, text);
         if(enter == 'y'|| enter == 'Y'){
             weapon->param = -1;
@@ -188,6 +205,7 @@ int open_inventory(items *inventory, items *armour, items *weapon, Parametrs *pl
         return 1;
     }
     do{
+        clear_screen();
         check += armour_show(armour);
         check += weapon_show(weapon, &player->hero);
         check += main_parametrs_show(player);
@@ -228,6 +246,7 @@ int open_inventory(items *inventory, items *armour, items *weapon, Parametrs *pl
             }  
         }
     }while(command != 3 && fl != 1);
+    clear_screen();
     return 0;
 }
 

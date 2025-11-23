@@ -2,8 +2,6 @@
 #include "init.h"
 #include "sys_funcs.h"
 #include "text_blocks.h"
-#include "dungeon_logic.h"
-#include "player_parametrs.h"
 
 
 int class_pick(Parametrs *player){
@@ -33,7 +31,7 @@ int class_pick(Parametrs *player){
         class_pick_text(player);
         check = scanf("%d", &player->hero);
         clear_input();
-    }while(check != 1 && ((player->hero < 0 || player->hero > 2) && (player->hero != 78)));
+    }while(check != 1 || ((player->hero < 0 || player->hero > 3) && (player->hero != 78)));
     player->hero -= 1;
     switch(player->hero) {
         case 0:

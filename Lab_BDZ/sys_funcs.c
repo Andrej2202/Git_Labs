@@ -13,7 +13,7 @@ void yes_no_input(char* enter, char* text){
     int res = 0;
     do
     {
-        printf("Хочешь %s? (y/n): ", text);
+        printf("%s? (y/n): ", text);
         scanf(" %c",  enter);
         res = clear_input();
     }while((*enter != 'n' && *enter != 'N' && *enter != 'y' && *enter != 'Y') || res !=0);
@@ -21,8 +21,8 @@ void yes_no_input(char* enter, char* text){
 
 int my_strcmp(const char *s1, const char *s2){
 	while (*s1 && (*s1 == *s2)){
-        s2++;
         s1++;
+        s2++;
     }
 	return (*(unsigned char *)s1 - *(unsigned char *)s2); // ансайнд потому что есть приколы с минусовыми кодировками
 }

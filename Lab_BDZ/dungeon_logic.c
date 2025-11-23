@@ -16,7 +16,7 @@ int dungeon_generation(int* dungeon){
         printf("Ошибка получения dungeon в dungeon_generation");
         return 1;
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 2; j++) {
             *(dungeon + i * 2 + j) = j;
         }
@@ -33,8 +33,9 @@ int dungeon_generation(int* dungeon){
 
 
 int dungeon_exploring(){
-    int dungeon[7][2];
+    int dungeon[9][2];
     int current_dungeon = 1, way = 0, check = 0, saving_fl = 0;
+    char boss_question[98] = "Хочешь открыть инвентарь перед входом в босс локацию", die_question[53] = "Хочешь загрузить сохранение",ans;
     Parametrs player;
     items weapon = {"кулачки", 0};
     items armour[3] = {
@@ -48,7 +49,6 @@ int dungeon_exploring(){
     if(check != 0){
         return 1;
     }
-
     clear_screen();
     printf("Здравствуй, исследователь подземелий!\n");
     printf("Для продолжения повествования на протяжении всей истории используй enter\n");
@@ -60,7 +60,7 @@ int dungeon_exploring(){
     }
 
     entering_dungeons_text(&player);
-    while(current_dungeon < 8){
+    while(current_dungeon < 10){
         do{
             each_dungeon_text(current_dungeon);
             check = scanf("%d", &way);            
@@ -112,27 +112,42 @@ int dungeon_exploring(){
                     return 1;
                 }
                 if(player.hp <= 0){
-                    break;
+                    if(saving_fl == 1){
+                        yes_no_input(&ans, die_question);
+                        if(ans == 'y' || ans == 'Y'){
+                            check = read_file(&current_dungeon, inventory, armour, &weapon, &player);
+                            if(check != 0){
+                                return 1;
+                            }
+                            continue;
+                        }
+                    }
+                    break; // 
                 }
             }
             printf("Герой покинул пещеру и пошел дальше по единственному туннелю\n");
             clear_input();
             current_dungeon++;
         }
-
-        if(current_dungeon != 8){
-            clear_screen();
-        }
+        clear_screen();
     }
-    
-    if(saving_fl == 1 && remove("data.txt") != 0){
-        printf("Ошибка удаления файла");
-    }
-    if(player.hp == 0){
-        game_end_text(0);
+    if(player.hp <= 0){
+        bad_end_text();
     }
     else{
-        game_end_text(1);
-    } 
+        end_of_base_dungeons();
+        yes_no_input(&ans, boss_question);
+        if(ans == 'y' || ans == 'Y'){
+            check = open_inventory(inventory, armour, &weapon, &player); 
+            if(check != 0){
+                return 1;
+            }
+        }
+        boss_fight(current_dungeon, inventory, armour, &weapon, &player);
+    }
+    if(saving_fl == 1 && remove("data.txt") != 0){
+        printf("Ошибка удаления файла");
+        return 1;
+    }
     return 0;
 }

@@ -84,7 +84,7 @@ int read_mainParam(char *res, int* cur_dungeon, Parametrs *player){
                     item_c += res[i] - '0';
                     break;
                 default:
-                 return 1;
+                    return 1;
             }
         }
     } 
@@ -92,8 +92,9 @@ int read_mainParam(char *res, int* cur_dungeon, Parametrs *player){
     player->max_hp = max_hp;
     player->strength = strength;
     player->level = level;
-    player->item_count = item_c;
+    player->xp = xp;
     *cur_dungeon = dungeon;
+    player->item_count = item_c;
     return 0;
 }
 
@@ -198,6 +199,7 @@ int read_file(int* cur_dungeon, items *inventory, items *armour, items *weapon, 
     
     printf("Загрузка сохранения прошла успешно.");
     clear_input();
+    clear_screen();
     fclose(file);
     return 0;
     
